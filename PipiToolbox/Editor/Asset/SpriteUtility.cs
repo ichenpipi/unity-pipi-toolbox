@@ -12,14 +12,14 @@ namespace PipiToolbox.Editor
     /// Sprite 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220831</version>
+    /// <version>20220905</version>
     public static class SpriteUtility
     {
 
         /// <summary>
         /// 批量设置 Sprite 资源的 Packing Tag
         /// </summary>
-        [MenuItem("Assets/Pipi Toolbox/Batch Setting Sprite Packing Tag", false, 4)]
+        [MenuItem(PipiToolbox.BaseMenuPath + "Batch Setting Sprite Packing Tag", false, 4)]
         private static void MenuBatchSettingSpritePackingTag()
         {
             var inputDialog = InputDialogWindow.Create("New Packing Tag");

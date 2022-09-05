@@ -10,9 +10,14 @@ namespace PipiToolbox.Editor
     /// 资源信息工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220827</version>
+    /// <version>20220905</version>
     public static class AssetInfoUtility
     {
+
+        /// <summary>
+        /// 菜单项路径
+        /// </summary>
+        private const string MenuPath = "Print Asset Info/";
 
         /// <summary>
         /// 键颜色
@@ -27,7 +32,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印全部信息
         /// </summary>
-        [MenuItem("Assets/Pipi Toolbox/AssetInfo/All", false, 4)]
+        [MenuItem(PipiToolbox.BaseMenuPath + MenuPath + "All", false, 4)]
         public static void PrintAll()
         {
             PrintName();
@@ -42,7 +47,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印名称
         /// </summary>
-        [MenuItem("Assets/Pipi Toolbox/AssetInfo/Name", false, 4)]
+        [MenuItem(PipiToolbox.BaseMenuPath + MenuPath + "Name", false, 4)]
         public static void PrintName()
         {
             string name = Selection.activeObject.name;
@@ -52,7 +57,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印类型名称
         /// </summary>
-        [MenuItem("Assets/Pipi Toolbox/AssetInfo/Type Name", false, 4)]
+        [MenuItem(PipiToolbox.BaseMenuPath + MenuPath + "Type Name", false, 4)]
         public static void PrintTypeName()
         {
             string name = Selection.activeObject.GetType().Name;
@@ -62,7 +67,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印相对路径
         /// </summary>
-        [MenuItem("Assets/Pipi Toolbox/AssetInfo/Relative Path", false, 4)]
+        [MenuItem(PipiToolbox.BaseMenuPath + MenuPath + "Relative Path", false, 4)]
         public static void PrintRelativePath()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
@@ -72,7 +77,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印绝对路径
         /// </summary>
-        [MenuItem("Assets/Pipi Toolbox/AssetInfo/Absolute Path", false, 4)]
+        [MenuItem(PipiToolbox.BaseMenuPath + MenuPath + "Absolute Path", false, 4)]
         public static void PrintAbsolutePath()
         {
             string assetsPath = Application.dataPath;
@@ -84,7 +89,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印 GUID 和 File ID
         /// </summary>
-        [MenuItem("Assets/Pipi Toolbox/AssetInfo/GUID and File ID", false, 4)]
+        [MenuItem(PipiToolbox.BaseMenuPath + MenuPath + "GUID and File ID", false, 4)]
         public static void PrintGUIDAndFileID()
         {
             string guid;
@@ -97,7 +102,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印 Instance ID
         /// </summary>
-        [MenuItem("Assets/Pipi Toolbox/AssetInfo/Instance ID", false, 4)]
+        [MenuItem(PipiToolbox.BaseMenuPath + MenuPath + "Instance ID", false, 4)]
         public static void PrintInstanceID()
         {
             int instanceID = Selection.activeObject.GetInstanceID();
@@ -107,7 +112,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印 AssetBundle 名称
         /// </summary>
-        [MenuItem("Assets/Pipi Toolbox/AssetInfo/AssetBundle Name", false, 4)]
+        [MenuItem(PipiToolbox.BaseMenuPath + MenuPath + "AssetBundle Name", false, 4)]
         public static void PrintAssetBundleName()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
