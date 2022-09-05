@@ -23,7 +23,7 @@ namespace PipiToolbox.Editor
         private static void MenuBatchSettingAssetBundleName()
         {
             var inputDialog = InputDialogWindow.Create("New AssetBundle Name");
-            inputDialog.SetConfirmCallback(s => SetAssetBundleNameByGUIDs(Selection.assetGUIDs, s));
+            inputDialog.confirmCallback = s => SetAssetBundleNameByGUIDs(Selection.assetGUIDs, s);
         }
 
         /// <summary>

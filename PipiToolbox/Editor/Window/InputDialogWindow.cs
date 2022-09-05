@@ -32,9 +32,9 @@ namespace PipiToolbox.Editor
             // 窗口标题
             window.SetTitle(title);
             // 描述文本
-            window.SetDescription(description);
+            window.description = description;
             // 输入内容文本
-            window.SetInputContent(defaultInput);
+            window.inputContent = defaultInput;
             // 窗口尺寸
             window.SetSize(450, 200);
             // 使窗口居中于编辑器
@@ -45,7 +45,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 描述文本
         /// </summary>
-        private string description = "Type in the text area:";
+        public string description = "Type in the text area:";
 
         /// <summary>
         /// 输入内容
@@ -55,7 +55,17 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 确认按钮文本
         /// </summary>
-        private string confirmBtnLabel = "Confirm";
+        public string confirmBtnLabel = "Confirm";
+
+        /// <summary>
+        /// 是否显示取消按钮
+        /// </summary>
+        public bool needCancelBtn = false;
+
+        /// <summary>
+        /// 取消按钮文本
+        /// </summary>
+        public string cancelBtnLabel = "Cancel";
 
         /// <summary>
         /// 是否点击了确认按钮
@@ -63,14 +73,24 @@ namespace PipiToolbox.Editor
         private bool isConfirmed = false;
 
         /// <summary>
-        /// 确认按钮回调函数
+        /// 是否点击了按钮按钮
         /// </summary>
-        private Action<string> confirmCallback;
+        private bool isCanceled = false;
+
+        /// <summary>
+        /// 确认回调函数
+        /// </summary>
+        public Action<string> confirmCallback;
+
+        /// <summary>
+        /// 取消回调函数
+        /// </summary>
+        public Action cancelCallback;
 
         /// <summary>
         /// 窗口关闭回调函数
         /// </summary>
-        private Action<bool> closeCallback;
+        public Action<bool, bool> closeCallback;
 
         /// <summary>
         /// 设置窗口标题文本
@@ -79,42 +99,6 @@ namespace PipiToolbox.Editor
         public void SetTitle(string value)
         {
             titleContent = new GUIContent(value);
-        }
-
-        /// <summary>
-        /// 设置描述文本
-        /// </summary>
-        /// <param name="value"></param>
-        public void SetDescription(string value)
-        {
-            description = value;
-        }
-
-        /// <summary>
-        /// 设置输入内容文本
-        /// </summary>
-        /// <param name="value"></param>
-        public void SetInputContent(string value)
-        {
-            inputContent = value;
-        }
-
-        /// <summary>
-        /// 设置确认按钮回调函数
-        /// </summary>
-        /// <param name="callback">回调函数</param>
-        public void SetConfirmCallback(Action<string> callback)
-        {
-            confirmCallback = callback;
-        }
-
-        /// <summary>
-        /// 设置窗口关闭回调函数
-        /// </summary>
-        /// <param name="callback">回调函数</param>
-        public void SetCloseCallback(Action<bool> callback)
-        {
-            closeCallback = callback;
         }
 
         /// <summary>
@@ -154,7 +138,7 @@ namespace PipiToolbox.Editor
         /// </summary>
         public void OnDestroy()
         {
-            closeCallback?.Invoke(isConfirmed);
+            closeCallback?.Invoke(isConfirmed, isCanceled);
         }
 
         #endregion
@@ -186,6 +170,16 @@ namespace PipiToolbox.Editor
                 // 触发回调
                 isConfirmed = true;
                 confirmCallback?.Invoke(inputContent);
+                // 关闭窗口
+                Close();
+            }
+
+            // 取消按钮
+            if (needCancelBtn && GUILayout.Button(new GUIContent(cancelBtnLabel)))
+            {
+                // 触发回调
+                isCanceled = true;
+                cancelCallback?.Invoke();
                 // 关闭窗口
                 Close();
             }

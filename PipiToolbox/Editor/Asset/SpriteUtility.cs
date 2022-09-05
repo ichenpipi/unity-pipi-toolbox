@@ -23,7 +23,7 @@ namespace PipiToolbox.Editor
         private static void MenuBatchSettingSpritePackingTag()
         {
             var inputDialog = InputDialogWindow.Create("New Packing Tag");
-            inputDialog.SetConfirmCallback(s => SetSpritePackingTagByGUIDs(Selection.assetGUIDs, s));
+            inputDialog.confirmCallback = s => SetSpritePackingTagByGUIDs(Selection.assetGUIDs, s);
         }
 
         /// <summary>
