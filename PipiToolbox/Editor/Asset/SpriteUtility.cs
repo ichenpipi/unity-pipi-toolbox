@@ -85,16 +85,17 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
-        /// Set the AssetBundle name and variant.
+        /// 设置 Sprite 资源的 Packing Tag
         /// </summary>
         /// <param name="assetPath">资源路径</param>
         /// <param name="packingTag">Packing Tag</param>
         private static void SetPackingTag(string assetPath, string packingTag)
         {
             var assetImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter;
-            if (assetImporter != null)
+            if (assetImporter != null && assetImporter.textureType == TextureImporterType.Sprite)
             {
                 assetImporter.spritePackingTag = packingTag;
+                Debug.Log($"[Pipi Toolbox] Set Sprite Packing Tag: {assetPath} < {packingTag}");
             }
         }
 
