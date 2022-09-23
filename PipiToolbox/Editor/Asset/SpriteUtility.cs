@@ -22,9 +22,14 @@ namespace PipiToolbox.Editor
         private const string MenuPath = PipiToolbox.BaseMenuPath + "Sprite Utility/";
 
         /// <summary>
+        /// 菜单项优先级
+        /// </summary>
+        public const int MenuPriority = PipiToolbox.BaseMenuPriority + 21;
+
+        /// <summary>
         /// 批量设置 Sprite 资源的 Packing Tag
         /// </summary>
-        [MenuItem(MenuPath + "Batch Setting Sprite Packing Tag", false, 22)]
+        [MenuItem(MenuPath + "Batch Setting Sprite Packing Tag", false, MenuPriority)]
         private static void MenuBatchSettingSpritePackingTag()
         {
             var inputDialog = InputDialogWindow.Create("New Packing Tag");
@@ -65,7 +70,7 @@ namespace PipiToolbox.Editor
         public static async Task SetSpritePackingTag(string assetPath, string packingTag)
         {
             // 获取资源路径
-            string[] paths = AssetDatabase.IsValidFolder(assetPath) ? GetAssetsAtPath(assetPath) : new[] {assetPath};
+            string[] paths = AssetDatabase.IsValidFolder(assetPath) ? GetAssetsAtPath(assetPath) : new[] { assetPath };
             // 遍历处理
             int totalCount = paths.Length;
             for (int i = 0; i < totalCount; i++)
@@ -73,7 +78,7 @@ namespace PipiToolbox.Editor
                 string path = paths[i];
                 // 展示进度
                 string title = $"Setting Sprite Packing Tag... ({i + 1}/{totalCount})";
-                float progress = (float) (i + 1) / totalCount;
+                float progress = (float)(i + 1) / totalCount;
                 bool hasCanceled = EditorUtility.DisplayCancelableProgressBar(title, path, progress);
                 // 延迟
                 await Task.Delay(100);

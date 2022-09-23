@@ -20,6 +20,11 @@ namespace PipiToolbox.Editor
         private const string MenuPath = PipiToolbox.BaseMenuPath + "Print Asset Info/";
 
         /// <summary>
+        /// 菜单项优先级
+        /// </summary>
+        public const int MenuPriority = PipiToolbox.BaseMenuPriority;
+
+        /// <summary>
         /// 键颜色
         /// </summary>
         private static string keyColor = "white";
@@ -32,7 +37,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印全部信息
         /// </summary>
-        [MenuItem(MenuPath + "All", false, 10)]
+        [MenuItem(MenuPath + "All", false, MenuPriority)]
         public static void PrintAll()
         {
             PrintName();
@@ -47,7 +52,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印名称
         /// </summary>
-        [MenuItem(MenuPath + "Name", false, 10)]
+        [MenuItem(MenuPath + "Name", false, MenuPriority)]
         public static void PrintName()
         {
             string name = Selection.activeObject.name;
@@ -57,7 +62,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印类型名称
         /// </summary>
-        [MenuItem(MenuPath + "Type Name", false, 10)]
+        [MenuItem(MenuPath + "Type Name", false, MenuPriority)]
         public static void PrintTypeName()
         {
             string name = Selection.activeObject.GetType().Name;
@@ -67,7 +72,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印相对路径
         /// </summary>
-        [MenuItem(MenuPath + "Relative Path", false, 10)]
+        [MenuItem(MenuPath + "Relative Path", false, MenuPriority)]
         public static void PrintRelativePath()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
@@ -77,7 +82,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印绝对路径
         /// </summary>
-        [MenuItem(MenuPath + "Absolute Path", false, 10)]
+        [MenuItem(MenuPath + "Absolute Path", false, MenuPriority)]
         public static void PrintAbsolutePath()
         {
             string assetsPath = Application.dataPath;
@@ -89,7 +94,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印 GUID 和 File ID
         /// </summary>
-        [MenuItem(MenuPath + "GUID and File ID", false, 10)]
+        [MenuItem(MenuPath + "GUID and File ID", false, MenuPriority)]
         public static void PrintGUIDAndFileID()
         {
             string guid;
@@ -102,7 +107,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印 Instance ID
         /// </summary>
-        [MenuItem(MenuPath + "Instance ID", false, 10)]
+        [MenuItem(MenuPath + "Instance ID", false, MenuPriority)]
         public static void PrintInstanceID()
         {
             int instanceID = Selection.activeObject.GetInstanceID();
@@ -112,7 +117,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印 AssetBundle 名称
         /// </summary>
-        [MenuItem(MenuPath + "AssetBundle Name", false, 10)]
+        [MenuItem(MenuPath + "AssetBundle Name", false, MenuPriority)]
         public static void PrintAssetBundleName()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);

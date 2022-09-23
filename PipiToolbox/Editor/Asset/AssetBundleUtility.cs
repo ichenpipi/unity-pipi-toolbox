@@ -22,9 +22,14 @@ namespace PipiToolbox.Editor
         private const string MenuPath = PipiToolbox.BaseMenuPath + "AssetBundle Utility/";
 
         /// <summary>
+        /// 菜单项优先级
+        /// </summary>
+        public const int MenuPriority = PipiToolbox.BaseMenuPriority + 11;
+
+        /// <summary>
         /// 根据资源的路径设置资源的 AssetBundle 名称
         /// </summary>
-        [MenuItem(MenuPath + "Set AssetBundle Name Based On Path", false, 21)]
+        [MenuItem(MenuPath + "Set AssetBundle Name Based On Path", false, MenuPriority)]
         private static async void MenuSetAssetBundleNameBasedOnPath()
         {
             string[] guids = Selection.assetGUIDs;
@@ -39,7 +44,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 根据资源所在的目录设置资源的 AssetBundle 名称
         /// </summary>
-        [MenuItem(MenuPath + "Set AssetBundle Name Based On Directory", false, 21)]
+        [MenuItem(MenuPath + "Set AssetBundle Name Based On Directory", false, MenuPriority)]
         private static async void MenuSetAssetBundleNameBasedOnDirectory()
         {
             string[] guids = Selection.assetGUIDs;
@@ -60,7 +65,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 批量设置多个资源的 AssetBundle 名称
         /// </summary>
-        [MenuItem(MenuPath + "Batch Setting AssetBundle Name", false, 21)]
+        [MenuItem(MenuPath + "Batch Setting AssetBundle Name", false, MenuPriority)]
         private static void MenuBatchSettingAssetBundleName()
         {
             var inputDialog = InputDialogWindow.Create("New AssetBundle Name");
@@ -101,7 +106,7 @@ namespace PipiToolbox.Editor
         public static async Task SetAssetBundleName(string assetPath, string assetBundleName)
         {
             // 获取资源路径
-            string[] paths = AssetDatabase.IsValidFolder(assetPath) ? GetAssetsAtPath(assetPath) : new[] {assetPath};
+            string[] paths = AssetDatabase.IsValidFolder(assetPath) ? GetAssetsAtPath(assetPath) : new[] { assetPath };
             // 遍历处理
             int totalCount = paths.Length;
             for (int i = 0; i < totalCount; i++)
@@ -109,7 +114,7 @@ namespace PipiToolbox.Editor
                 string path = paths[i];
                 // 展示进度
                 string title = $"Setting AssetBundle Name... ({i + 1}/{totalCount})";
-                float progress = (float) (i + 1) / totalCount;
+                float progress = (float)(i + 1) / totalCount;
                 bool hasCanceled = EditorUtility.DisplayCancelableProgressBar(title, path, progress);
                 // 延迟
                 await Task.Delay(100);
