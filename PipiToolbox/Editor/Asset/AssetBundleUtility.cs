@@ -12,7 +12,7 @@ namespace PipiToolbox.Editor
     /// AssetBundle 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220923</version>
+    /// <version>20220924</version>
     public static class AssetBundleUtility
     {
 

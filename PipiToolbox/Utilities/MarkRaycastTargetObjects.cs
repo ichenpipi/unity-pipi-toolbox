@@ -10,7 +10,8 @@ namespace PipiToolbox.Editor
     /// </summary>
     /// <author>陈皮皮</author>
     /// <version>20220913</version>
-    public class MarkRaycastTargetObjects : MonoBehaviour {
+    public class MarkRaycastTargetObjects : MonoBehaviour
+    {
 
         [SerializeField]
         public Color color = Color.red;

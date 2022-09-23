@@ -10,7 +10,7 @@ namespace PipiToolbox.Editor
     /// 资源信息工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220923</version>
+    /// <version>20220924</version>
     public static class AssetInfoUtility
     {
 
@@ -22,7 +22,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        public const int MenuPriority = PipiToolbox.BaseMenuPriority;
+        public const int MenuPriority = PipiToolbox.BaseMenuPriority + 1;
 
         /// <summary>
         /// 键颜色
