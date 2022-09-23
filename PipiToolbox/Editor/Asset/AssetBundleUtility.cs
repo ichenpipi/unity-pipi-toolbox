@@ -12,19 +12,19 @@ namespace PipiToolbox.Editor
     /// AssetBundle 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220913</version>
+    /// <version>20220923</version>
     public static class AssetBundleUtility
     {
 
         /// <summary>
-        /// 菜单项名称
+        /// 菜单项路径
         /// </summary>
-        private const string MenuName = "AssetBundle Utility/";
+        private const string MenuPath = PipiToolbox.BaseMenuPath + "AssetBundle Utility/";
 
         /// <summary>
         /// 根据资源的路径设置资源的 AssetBundle 名称
         /// </summary>
-        [MenuItem(PipiToolbox.BaseMenuPath + MenuName + "Set AssetBundle Name Based On Path", false, 4)]
+        [MenuItem(MenuPath + "Set AssetBundle Name Based On Path", false, 21)]
         private static async void MenuSetAssetBundleNameBasedOnPath()
         {
             string[] guids = Selection.assetGUIDs;
@@ -39,7 +39,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 根据资源所在的目录设置资源的 AssetBundle 名称
         /// </summary>
-        [MenuItem(PipiToolbox.BaseMenuPath + MenuName + "Set AssetBundle Name Based On Directory", false, 4)]
+        [MenuItem(MenuPath + "Set AssetBundle Name Based On Directory", false, 21)]
         private static async void MenuSetAssetBundleNameBasedOnDirectory()
         {
             string[] guids = Selection.assetGUIDs;
@@ -52,6 +52,7 @@ namespace PipiToolbox.Editor
                     continue;
                 }
                 string assetBundleName = directory.Remove(0, 7).ToLower();
+                assetBundleName = assetBundleName.Replace("\\", "/");
                 await SetAssetBundleName(assetPath, assetBundleName);
             }
         }
@@ -59,7 +60,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 批量设置多个资源的 AssetBundle 名称
         /// </summary>
-        [MenuItem(PipiToolbox.BaseMenuPath + MenuName + "Batch Setting AssetBundle Name", false, 4)]
+        [MenuItem(MenuPath + "Batch Setting AssetBundle Name", false, 21)]
         private static void MenuBatchSettingAssetBundleName()
         {
             var inputDialog = InputDialogWindow.Create("New AssetBundle Name");
@@ -132,7 +133,13 @@ namespace PipiToolbox.Editor
         /// <param name="assetBundleVariant">AssetBundle 变体</param>
         private static void SetAssetBundleNameAndVariant(string assetPath, string assetBundleName, string assetBundleVariant)
         {
-            AssetImporter.GetAtPath(assetPath)?.SetAssetBundleNameAndVariant(assetBundleName, assetBundleVariant);
+            AssetImporter assetImporter = AssetImporter.GetAtPath(assetPath);
+            if (assetImporter == null)
+            {
+                return;
+            }
+            assetImporter.SetAssetBundleNameAndVariant(assetBundleName, assetBundleVariant);
+            Debug.Log($"[AssetBundle Utility] Set AssetBundle Name: <color=white>{assetPath}</color> > <color=yellow>{assetBundleName}</color>");
         }
 
         /// <summary>

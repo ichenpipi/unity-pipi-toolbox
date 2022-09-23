@@ -12,14 +12,19 @@ namespace PipiToolbox.Editor
     /// Sprite 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220905</version>
+    /// <version>20220923</version>
     public static class SpriteUtility
     {
 
         /// <summary>
+        /// 菜单项路径
+        /// </summary>
+        private const string MenuPath = PipiToolbox.BaseMenuPath + "Sprite Utility/";
+
+        /// <summary>
         /// 批量设置 Sprite 资源的 Packing Tag
         /// </summary>
-        [MenuItem(PipiToolbox.BaseMenuPath + "Batch Setting Sprite Packing Tag", false, 4)]
+        [MenuItem(MenuPath + "Batch Setting Sprite Packing Tag", false, 22)]
         private static void MenuBatchSettingSpritePackingTag()
         {
             var inputDialog = InputDialogWindow.Create("New Packing Tag");
@@ -95,7 +100,7 @@ namespace PipiToolbox.Editor
             if (assetImporter != null && assetImporter.textureType == TextureImporterType.Sprite)
             {
                 assetImporter.spritePackingTag = packingTag;
-                Debug.Log($"[Pipi Toolbox] Set Sprite Packing Tag: {assetPath} < {packingTag}");
+                Debug.Log($"[Sprite Utility] Set Sprite Packing Tag: <color=white>{assetPath}</color> > <color=yellow>{packingTag}</color>");
             }
         }
 
