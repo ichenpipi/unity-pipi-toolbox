@@ -10,7 +10,7 @@ namespace PipiToolbox.Editor
     /// 资源信息工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220924</version>
+    /// <version>20220927</version>
     public static class AssetInfoUtility
     {
 
@@ -25,14 +25,19 @@ namespace PipiToolbox.Editor
         public const int MenuPriority = PipiToolbox.BaseMenuPriority + 1;
 
         /// <summary>
-        /// 键颜色
+        /// Log 头部信息
         /// </summary>
-        private static string keyColor = "white";
+        private const string logHeader = "AssetInfo";
 
         /// <summary>
-        /// 值颜色
+        /// Log 键颜色
         /// </summary>
-        private static string valueColor = "yellow";
+        private static string logKeyColor = "white";
+
+        /// <summary>
+        /// Log 值颜色
+        /// </summary>
+        private static string logValueColor = "yellow";
 
         /// <summary>
         /// 打印全部信息
@@ -56,7 +61,7 @@ namespace PipiToolbox.Editor
         public static void PrintName()
         {
             string name = Selection.activeObject.name;
-            Debug.Log($"[Asset Info] <color={keyColor}>Name</color>: <color={valueColor}>{name}</color>");
+            Debug.Log($"[{logHeader}] <color={logKeyColor}>Name</color>: <color={logValueColor}>{name}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -66,7 +71,7 @@ namespace PipiToolbox.Editor
         public static void PrintTypeName()
         {
             string name = Selection.activeObject.GetType().Name;
-            Debug.Log($"[Asset Info] <color={keyColor}>Type Name</color>: <color={valueColor}>{name}</color>");
+            Debug.Log($"[{logHeader}] <color={logKeyColor}>Type Name</color>: <color={logValueColor}>{name}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -76,7 +81,7 @@ namespace PipiToolbox.Editor
         public static void PrintRelativePath()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            Debug.Log($"[Asset Info] <color={keyColor}>Relative Path</color>: <color={valueColor}>{path}</color>");
+            Debug.Log($"[{logHeader}] <color={logKeyColor}>Relative Path</color>: <color={logValueColor}>{path}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -88,7 +93,7 @@ namespace PipiToolbox.Editor
             string assetsPath = Application.dataPath;
             assetsPath = assetsPath.Substring(0, assetsPath.LastIndexOf("Assets", StringComparison.Ordinal));
             string path = Path.Combine(assetsPath, AssetDatabase.GetAssetPath(Selection.activeObject));
-            Debug.Log($"[Asset Info] <color={keyColor}>Absolute Path</color>: <color={valueColor}>{path}</color>");
+            Debug.Log($"[{logHeader}] <color={logKeyColor}>Absolute Path</color>: <color={logValueColor}>{path}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -100,8 +105,8 @@ namespace PipiToolbox.Editor
             string guid;
             long localId;
             AssetDatabase.TryGetGUIDAndLocalFileIdentifier(Selection.activeObject, out guid, out localId);
-            Debug.Log($"[Asset Info] <color={keyColor}>GUID</color>: <color={valueColor}>{guid}</color>");
-            Debug.Log($"[Asset Info] <color={keyColor}>File ID (Local ID, Local Identifier In File)</color>: <color={valueColor}>{localId}</color>");
+            Debug.Log($"[{logHeader}] <color={logKeyColor}>GUID</color>: <color={logValueColor}>{guid}</color>", Selection.activeObject);
+            Debug.Log($"[{logHeader}] <color={logKeyColor}>File ID (Local ID, Local Identifier In File)</color>: <color={logValueColor}>{localId}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -111,7 +116,7 @@ namespace PipiToolbox.Editor
         public static void PrintInstanceID()
         {
             int instanceID = Selection.activeObject.GetInstanceID();
-            Debug.Log($"[Asset Info] <color={keyColor}>Instance ID</color>: <color={valueColor}>{instanceID}</color>");
+            Debug.Log($"[{logHeader}] <color={logKeyColor}>Instance ID</color>: <color={logValueColor}>{instanceID}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -124,11 +129,11 @@ namespace PipiToolbox.Editor
             string name = AssetDatabase.GetImplicitAssetBundleName(path);
             if (name.Equals(""))
             {
-                Debug.Log($"[Asset Info] <color={keyColor}>AssetBundle Name</color>: <color=red><None></color>");
+                Debug.Log($"[{logHeader}] <color={logKeyColor}>AssetBundle Name</color>: <color=red><None></color>", Selection.activeObject);
             }
             else
             {
-                Debug.Log($"[Asset Info] <color={keyColor}>AssetBundle Name</color>: <color={valueColor}>{name}</color>");
+                Debug.Log($"[{logHeader}] <color={logKeyColor}>AssetBundle Name</color>: <color={logValueColor}>{name}</color>", Selection.activeObject);
             }
         }
 

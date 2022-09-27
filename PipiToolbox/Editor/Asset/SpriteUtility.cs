@@ -12,7 +12,7 @@ namespace PipiToolbox.Editor
     /// Sprite 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220924</version>
+    /// <version>20220927</version>
     public static class SpriteUtility
     {
 
@@ -25,6 +25,21 @@ namespace PipiToolbox.Editor
         /// 菜单项优先级
         /// </summary>
         public const int MenuPriority = PipiToolbox.BaseMenuPriority + 21;
+
+        /// <summary>
+        /// Log 头部信息
+        /// </summary>
+        private const string logHeader = "Sprite";
+
+        /// <summary>
+        /// Log 键颜色
+        /// </summary>
+        private static string logKeyColor = "white";
+
+        /// <summary>
+        /// Log 值颜色
+        /// </summary>
+        private static string logValueColor = "yellow";
 
         /// <summary>
         /// 批量设置 Sprite 资源的 Packing Tag
@@ -91,7 +106,6 @@ namespace PipiToolbox.Editor
                 SetPackingTag(path, packingTag);
             }
             EditorUtility.ClearProgressBar();
-            AssetDatabase.Refresh();
         }
 
         /// <summary>
@@ -102,11 +116,13 @@ namespace PipiToolbox.Editor
         private static void SetPackingTag(string assetPath, string packingTag)
         {
             var assetImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter;
-            if (assetImporter != null && assetImporter.textureType == TextureImporterType.Sprite)
+            if (assetImporter == null || assetImporter.textureType != TextureImporterType.Sprite)
             {
-                assetImporter.spritePackingTag = packingTag;
-                Debug.Log($"[Sprite Utility] Set Sprite Packing Tag: <color=white>{assetPath}</color> > <color=yellow>{packingTag}</color>");
+                return;
             }
+            assetImporter.spritePackingTag = packingTag;
+            assetImporter.SaveAndReimport();
+            Debug.Log($"[{logHeader}] Set Sprite Packing Tag: <color={logKeyColor}>{assetPath}</color> => <color={logValueColor}>{packingTag}</color>", assetImporter);
         }
 
         /// <summary>

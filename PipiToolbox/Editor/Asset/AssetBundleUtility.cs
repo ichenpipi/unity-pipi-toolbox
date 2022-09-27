@@ -12,7 +12,7 @@ namespace PipiToolbox.Editor
     /// AssetBundle 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220924</version>
+    /// <version>20220927</version>
     public static class AssetBundleUtility
     {
 
@@ -25,6 +25,21 @@ namespace PipiToolbox.Editor
         /// 菜单项优先级
         /// </summary>
         public const int MenuPriority = PipiToolbox.BaseMenuPriority + 11;
+
+        /// <summary>
+        /// Log 头部信息
+        /// </summary>
+        private const string logHeader = "AssetBundle";
+
+        /// <summary>
+        /// Log 键颜色
+        /// </summary>
+        private static string logKeyColor = "white";
+
+        /// <summary>
+        /// Log 值颜色
+        /// </summary>
+        private static string logValueColor = "yellow";
 
         /// <summary>
         /// 根据资源的路径设置资源的 AssetBundle 名称
@@ -127,7 +142,6 @@ namespace PipiToolbox.Editor
                 SetAssetBundleNameAndVariant(path, assetBundleName, null);
             }
             EditorUtility.ClearProgressBar();
-            AssetDatabase.Refresh();
         }
 
         /// <summary>
@@ -144,7 +158,8 @@ namespace PipiToolbox.Editor
                 return;
             }
             assetImporter.SetAssetBundleNameAndVariant(assetBundleName, assetBundleVariant);
-            Debug.Log($"[AssetBundle Utility] Set AssetBundle Name: <color=white>{assetPath}</color> > <color=yellow>{assetBundleName}</color>");
+            assetImporter.SaveAndReimport();
+            Debug.Log($"[{logHeader}] Set AssetBundle Name: <color={logKeyColor}>{assetPath}</color> => <color={logValueColor}>{assetBundleName}</color>", assetImporter);
         }
 
         /// <summary>
