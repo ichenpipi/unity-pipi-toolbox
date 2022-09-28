@@ -24,28 +24,28 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        public const int MenuPriority = PipiToolbox.BaseMenuPriority + 11;
+        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 11;
 
         /// <summary>
         /// Log 头部信息
         /// </summary>
-        private const string logHeader = "AssetBundle";
+        private const string LogHeader = "AssetBundle";
 
         /// <summary>
         /// Log 键颜色
         /// </summary>
-        private static string logKeyColor = "white";
+        private const string LogKeyColor = "white";
 
         /// <summary>
         /// Log 值颜色
         /// </summary>
-        private static string logValueColor = "yellow";
+        private const string LogValueColor = "yellow";
 
         /// <summary>
         /// 根据资源的路径设置资源的 AssetBundle 名称
         /// </summary>
         [MenuItem(MenuPath + "Set AssetBundle Name Based On Path", false, MenuPriority)]
-        private static async void MenuSetAssetBundleNameBasedOnPath()
+        private static async void Menu_SetAssetBundleNameBasedOnPath()
         {
             string[] guids = Selection.assetGUIDs;
             foreach (string guid in guids)
@@ -60,7 +60,7 @@ namespace PipiToolbox.Editor
         /// 根据资源所在的目录设置资源的 AssetBundle 名称
         /// </summary>
         [MenuItem(MenuPath + "Set AssetBundle Name Based On Directory", false, MenuPriority)]
-        private static async void MenuSetAssetBundleNameBasedOnDirectory()
+        private static async void Menu_SetAssetBundleNameBasedOnDirectory()
         {
             string[] guids = Selection.assetGUIDs;
             foreach (string guid in guids)
@@ -81,9 +81,9 @@ namespace PipiToolbox.Editor
         /// 批量设置多个资源的 AssetBundle 名称
         /// </summary>
         [MenuItem(MenuPath + "Batch Setting AssetBundle Name", false, MenuPriority)]
-        private static void MenuBatchSettingAssetBundleName()
+        private static void Menu_BatchSettingAssetBundleName()
         {
-            var inputDialog = InputDialogWindow.Create("New AssetBundle Name");
+            InputDialogWindow inputDialog = InputDialogWindow.Create("New AssetBundle Name");
             inputDialog.confirmCallback = s => SetAssetBundleNameByGUIDs(Selection.assetGUIDs, s);
         }
 
@@ -159,7 +159,7 @@ namespace PipiToolbox.Editor
             }
             assetImporter.SetAssetBundleNameAndVariant(assetBundleName, assetBundleVariant);
             assetImporter.SaveAndReimport();
-            Debug.Log($"[{logHeader}] Set AssetBundle Name: <color={logKeyColor}>{assetPath}</color> => <color={logValueColor}>{assetBundleName}</color>", assetImporter);
+            Debug.Log($"[{LogHeader}] Set AssetBundle Name: <color={LogKeyColor}>{assetPath}</color> => <color={LogValueColor}>{assetBundleName}</color>", assetImporter);
         }
 
         /// <summary>

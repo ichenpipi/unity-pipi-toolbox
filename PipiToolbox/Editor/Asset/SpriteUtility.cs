@@ -24,30 +24,30 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        public const int MenuPriority = PipiToolbox.BaseMenuPriority + 21;
+        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 21;
 
         /// <summary>
         /// Log 头部信息
         /// </summary>
-        private const string logHeader = "Sprite";
+        private const string LogHeader = "Sprite";
 
         /// <summary>
         /// Log 键颜色
         /// </summary>
-        private static string logKeyColor = "white";
+        private const string LogKeyColor = "white";
 
         /// <summary>
         /// Log 值颜色
         /// </summary>
-        private static string logValueColor = "yellow";
+        private const string LogValueColor = "yellow";
 
         /// <summary>
         /// 批量设置 Sprite 资源的 Packing Tag
         /// </summary>
         [MenuItem(MenuPath + "Batch Setting Sprite Packing Tag", false, MenuPriority)]
-        private static void MenuBatchSettingSpritePackingTag()
+        private static void Menu_BatchSettingSpritePackingTag()
         {
-            var inputDialog = InputDialogWindow.Create("New Packing Tag");
+            InputDialogWindow inputDialog = InputDialogWindow.Create("New Packing Tag");
             inputDialog.confirmCallback = s => SetSpritePackingTagByGUIDs(Selection.assetGUIDs, s);
         }
 
@@ -122,7 +122,7 @@ namespace PipiToolbox.Editor
             }
             assetImporter.spritePackingTag = packingTag;
             assetImporter.SaveAndReimport();
-            Debug.Log($"[{logHeader}] Set Sprite Packing Tag: <color={logKeyColor}>{assetPath}</color> => <color={logValueColor}>{packingTag}</color>", assetImporter);
+            Debug.Log($"[{LogHeader}] Set Sprite Packing Tag: <color={LogKeyColor}>{assetPath}</color> => <color={LogValueColor}>{packingTag}</color>", assetImporter);
         }
 
         /// <summary>

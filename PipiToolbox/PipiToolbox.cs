@@ -14,7 +14,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        public const string BaseMenuPath = "Assets/Pipi Toolbox 😼🧰/";
+        public const string BaseMenuPath = "Assets/Pipi Toolbox 😼/";
 
         /// <summary>
         /// 菜单项优先级
