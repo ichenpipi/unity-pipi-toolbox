@@ -44,13 +44,14 @@ namespace PipiToolbox.Editor
         private const string LogValueColor = "yellow";
 
         /// <summary>
-        /// 
+        /// 存放 SpriteAtlas 资源的路径（基于项目的 Assets 目录）
         /// </summary>
-        [MenuItem(MenuPath + "Test", false, MenuPriority)]
-        private static void Menu_Test()
-        {
-            CreateSpriteAtlas("Assets/_zHero/Test/test.spriteatlas");
-        }
+        private const string SpriteAtlasFolderName = "";
+
+        /// <summary>
+        /// 存放 SpriteAtlas 资源的路径（绝对路径）
+        /// </summary>
+        private static readonly string SpriteAtlasFolderPath = Path.Combine(Application.dataPath, SpriteAtlasFolderName);
 
         /// <summary>
         /// 
@@ -58,7 +59,9 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Create SpriteAtlas With Selection", false, MenuPriority)]
         private static void Menu_CreateSpriteAtlasWithSelection()
         {
+            // 获取选中的 Sprite
             Sprite[] sprites = GetAllSpritesInSelection();
+            if (sprites.Length == 0) return;
         }
 
         /// <summary>
@@ -71,16 +74,37 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
-        /// 
+        /// 添加当前选中的 Sprite 资源到已有的 SpriteAtlas
         /// </summary>
         [MenuItem(MenuPath + "Add Selection To Existing SpriteAtlas", false, MenuPriority)]
-        private static async void Menu_AddSelectionToExistingSpriteAtlas()
+        private static void Menu_AddSelectionToExistingSpriteAtlas()
         {
             // 获取选中的 Sprite
             Sprite[] sprites = GetAllSpritesInSelection();
-            if (sprites.Length == 0) return;
+            if (sprites.Length == 0)
+            {
+                Debug.Log($"[{LogHeader}] No sprite asset found at current selection.");
+                return;
+            }
             // 选择已有的图集
             SpriteAtlas spriteAtlas = PickExistingSpriteAtlas();
+            // 添加
+            AddSpritesToSpriteAtlas(spriteAtlas, sprites);
+        }
+
+        /// <summary>
+        /// 添加 Sprite 到 SpriteAtlas
+        /// </summary>
+        /// <param name="spriteAtlas"></param>
+        /// <param name="sprites"></param>
+        public static async void AddSpritesToSpriteAtlas(SpriteAtlas spriteAtlas, Sprite[] sprites)
+        {
+            if (sprites.Length == 0)
+            {
+                Debug.Log($"[{LogHeader}] sprite array is empty, skip adding.");
+                return;
+            }
+            // 图集路径
             string spriteAtlasPath = AssetDatabase.GetAssetPath(spriteAtlas);
             // 开始添加
             int totalCount = sprites.Length;
@@ -93,7 +117,7 @@ namespace PipiToolbox.Editor
                 float progress = (float)(i + 1) / totalCount;
                 bool hasCanceled = EditorUtility.DisplayCancelableProgressBar(title, spritePath, progress);
                 // 延迟
-                await Task.Delay(100);
+                await Task.Delay(1);
                 // 是否已取消
                 if (hasCanceled) break;
                 // 添加到图集
@@ -112,8 +136,9 @@ namespace PipiToolbox.Editor
         /// <returns></returns>
         private static Sprite[] GetAllSpritesInSelection()
         {
+            string[] guids = Selection.assetGUIDs;
             List<Sprite> sprites = new List<Sprite>();
-            foreach (string guid in Selection.assetGUIDs)
+            foreach (string guid in guids)
             {
                 Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(AssetDatabase.GUIDToAssetPath(guid));
                 if (sprite) sprites.Add(sprite);
@@ -183,8 +208,8 @@ namespace PipiToolbox.Editor
         private static SpriteAtlas PickExistingSpriteAtlas()
         {
             const string title = "Select an existing SpriteAtlas";
-            string directory = Application.dataPath;
             const string extension = "spriteatlas";
+            string directory = SpriteAtlasFolderPath;
             string path = EditorUtility.OpenFilePanel(title, directory, extension);
             return AssetDatabase.LoadAssetAtPath<SpriteAtlas>(GetAssetRelativePath(path));
         }

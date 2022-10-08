@@ -96,7 +96,7 @@ namespace PipiToolbox.Editor
                 float progress = (float)(i + 1) / totalCount;
                 bool hasCanceled = EditorUtility.DisplayCancelableProgressBar(title, path, progress);
                 // 延迟
-                await Task.Delay(100);
+                await Task.Delay(1);
                 // 是否取消了
                 if (hasCanceled)
                 {
@@ -115,7 +115,7 @@ namespace PipiToolbox.Editor
         /// <param name="packingTag">Packing Tag</param>
         private static void SetPackingTag(string assetPath, string packingTag)
         {
-            var assetImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter;
+            TextureImporter assetImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter;
             if (assetImporter == null || assetImporter.textureType != TextureImporterType.Sprite)
             {
                 return;
