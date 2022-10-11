@@ -84,7 +84,8 @@ namespace PipiToolbox.Editor
         private static void Menu_BatchSettingAssetBundleName()
         {
             InputDialogWindow inputDialog = InputDialogWindow.Create("New AssetBundle Name");
-            inputDialog.confirmCallback = s => SetAssetBundleNameByGUIDs(Selection.assetGUIDs, s);
+            async void InputDialogConfirmCallback(string s) => await SetAssetBundleNameByGUIDs(Selection.assetGUIDs, s);
+            inputDialog.confirmCallback = InputDialogConfirmCallback;
         }
 
         /// <summary>
