@@ -125,7 +125,7 @@ namespace PipiToolbox.Editor
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             string name = AssetDatabase.GetImplicitAssetBundleName(path);
-            if (name.Equals(""))
+            if (string.IsNullOrEmpty(name))
             {
                 Debug.Log($"[{LogHeader}] <color={LogKeyColor}>AssetBundle Name</color>: <color=red><None></color>", Selection.activeObject);
             }
