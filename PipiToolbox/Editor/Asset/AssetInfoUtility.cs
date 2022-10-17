@@ -10,14 +10,14 @@ namespace PipiToolbox.Editor
     /// 资源信息工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220927</version>
+    /// <version>20221017</version>
     public static class AssetInfoUtility
     {
 
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.BaseMenuPath + "Print Asset Info/";
+        private const string MenuPath = PipiToolbox.BaseMenuPath + "Asset Info/";
 
         /// <summary>
         /// 菜单项优先级
@@ -102,9 +102,7 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "GUID and File ID", false, MenuPriority)]
         public static void PrintGUIDAndFileID()
         {
-            string guid;
-            long localId;
-            AssetDatabase.TryGetGUIDAndLocalFileIdentifier(Selection.activeObject, out guid, out localId);
+            AssetDatabase.TryGetGUIDAndLocalFileIdentifier(Selection.activeObject, out string guid, out long localId);
             Debug.Log($"[{LogHeader}] <color={LogKeyColor}>GUID</color>: <color={LogValueColor}>{guid}</color>", Selection.activeObject);
             Debug.Log($"[{LogHeader}] <color={LogKeyColor}>File ID (Local ID, Local Identifier In File)</color>: <color={LogValueColor}>{localId}</color>", Selection.activeObject);
         }
@@ -135,6 +133,17 @@ namespace PipiToolbox.Editor
             {
                 Debug.Log($"[{LogHeader}] <color={LogKeyColor}>AssetBundle Name</color>: <color={LogValueColor}>{name}</color>", Selection.activeObject);
             }
+        }
+
+        /// <summary>
+        /// 复制 AssetBundle 名称到系统剪切板
+        /// </summary>
+        [MenuItem(MenuPath + "Copy AssetBundle Name", false, MenuPriority)]
+        public static void CopyAssetBundleName()
+        {
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            string name = AssetDatabase.GetImplicitAssetBundleName(path);
+            GUIUtility.systemCopyBuffer = name;
         }
 
     }
