@@ -13,18 +13,18 @@ namespace PipiToolbox.Editor
     /// </summary>
     /// <author>陈皮皮</author>
     /// <version>20220927</version>
-    public static class AssetBundleUtility
+    public static class AssetBundleTool
     {
 
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.BaseMenuPath + "AssetBundle Utility/";
+        private const string MenuPath = PipiToolbox.BaseMenuPath + "AssetBundle Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 11;
+        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 21;
 
         /// <summary>
         /// Log 头部信息

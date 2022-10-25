@@ -11,7 +11,7 @@ namespace PipiToolbox.Editor
     /// </summary>
     /// <author>陈皮皮</author>
     /// <version>20221017</version>
-    public static class AssetInfoUtility
+    public static class AssetInfoTools
     {
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 1;
+        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 101;
 
         /// <summary>
         /// Log 头部信息

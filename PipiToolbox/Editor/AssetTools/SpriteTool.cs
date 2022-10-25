@@ -13,18 +13,18 @@ namespace PipiToolbox.Editor
     /// </summary>
     /// <author>陈皮皮</author>
     /// <version>20220927</version>
-    public static class SpriteUtility
+    public static class SpriteTool
     {
 
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.BaseMenuPath + "Sprite Utility/";
+        private const string MenuPath = PipiToolbox.BaseMenuPath + "Sprite Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 21;
+        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 22;
 
         /// <summary>
         /// Log 头部信息
