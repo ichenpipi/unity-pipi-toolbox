@@ -25,7 +25,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 41;
+        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 50;
 
         private static class Operation
         {
