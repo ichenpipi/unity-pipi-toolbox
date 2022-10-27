@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEditor;
+using Object = UnityEngine.Object;
 
 namespace PipiToolbox.Editor
 {
@@ -77,7 +80,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 打印相对路径
         /// </summary>
-        [MenuItem(MenuPath + "Relative Path", false, MenuPriority)]
+        [MenuItem(MenuPath + "Path", false, MenuPriority)]
         public static void PrintRelativePath()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
@@ -90,9 +93,7 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Absolute Path", false, MenuPriority)]
         public static void PrintAbsolutePath()
         {
-            string assetsPath = Application.dataPath;
-            assetsPath = assetsPath.Substring(0, assetsPath.LastIndexOf("Assets", StringComparison.Ordinal));
-            string path = Path.Combine(assetsPath, AssetDatabase.GetAssetPath(Selection.activeObject));
+            string path = GetAbsolutePath(Selection.activeObject);
             Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Absolute Path</color>: <color={LogValueColor}>{path}</color>", Selection.activeObject);
         }
 
@@ -123,8 +124,7 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "AssetBundle Name", false, MenuPriority)]
         public static void PrintAssetBundleName()
         {
-            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            string name = AssetDatabase.GetImplicitAssetBundleName(path);
+            string name = GetAssetBundleName(Selection.activeObject);
             if (string.IsNullOrEmpty(name))
             {
                 Debug.Log($"[{LogHeader}] <color={LogKeyColor}>AssetBundle Name</color>: <color=red><None></color>", Selection.activeObject);
@@ -136,14 +136,78 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
+        /// 复制相对路径到系统剪切板
+        /// </summary>
+        [MenuItem(MenuPath + "Copy Path", false, MenuPriority + 11)]
+        public static void CopyRelativePath()
+        {
+            List<string> list = new List<string>();
+            foreach (string guid in Selection.assetGUIDs)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                list.Add(path);
+            }
+            GUIUtility.systemCopyBuffer = Join(list, ", ");
+        }
+
+        /// <summary>
         /// 复制 AssetBundle 名称到系统剪切板
         /// </summary>
-        [MenuItem(MenuPath + "Copy AssetBundle Name", false, MenuPriority)]
+        [MenuItem(MenuPath + "Copy AssetBundle Name", false, MenuPriority + 11)]
         public static void CopyAssetBundleName()
         {
-            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            string name = AssetDatabase.GetImplicitAssetBundleName(path);
-            GUIUtility.systemCopyBuffer = name;
+            List<string> list = new List<string>();
+            foreach (string guid in Selection.assetGUIDs)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                Object asset = AssetDatabase.LoadAssetAtPath<Object>(path);
+                list.Add(GetAssetBundleName(asset));
+            }
+            GUIUtility.systemCopyBuffer = Join(list, ", ");
+        }
+
+        /// <summary>
+        /// 获取绝对路径
+        /// </summary>
+        /// <param name="asset"></param>
+        /// <returns></returns>
+        private static string GetAbsolutePath(Object asset)
+        {
+            string assetsPath = Application.dataPath;
+            assetsPath = assetsPath.Substring(0, assetsPath.LastIndexOf("Assets", StringComparison.Ordinal));
+            return Path.Combine(assetsPath, AssetDatabase.GetAssetPath(asset));
+        }
+
+        /// <summary>
+        /// 获取 AssetBundle 名称
+        /// </summary>
+        /// <param name="asset"></param>
+        /// <returns></returns>
+        private static string GetAssetBundleName(Object asset)
+        {
+            string path = AssetDatabase.GetAssetPath(asset);
+            return AssetDatabase.GetImplicitAssetBundleName(path);
+        }
+
+        /// <summary>
+        /// 拼接字符串
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="separator"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        private static string Join<T>(IList<T> list, string separator = ",")
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < list.Count; ++i)
+            {
+                builder.Append(list[i]);
+                if (i < list.Count - 1)
+                {
+                    builder.Append(separator);
+                }
+            }
+            return builder.ToString();
         }
 
     }

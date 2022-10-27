@@ -38,10 +38,10 @@ namespace PipiToolbox.Editor
         private const string LogValueColor = "yellow";
 
         [MenuItem(MenuPath + "Find Asset By GUID", false, MenuPriority)]
-        private static void Menu_SearchByGUID()
+        private static void Menu_FindByGUID()
         {
             InputDialogWindow inputDialog = InputDialogWindow.Create("Find asset by GUID");
-            inputDialog.description = "Please enter the GUID of the asset:";
+            inputDialog.description = "Enter the GUID:";
             void InputDialogConfirmCallback(string input)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(input);
@@ -53,6 +53,27 @@ namespace PipiToolbox.Editor
                 else
                 {
                     Debug.LogWarning($"[{LogHeader}] There is no asset with GUID: <color={LogValueColor}>{input}</color>");
+                }
+            }
+            inputDialog.confirmCallback = InputDialogConfirmCallback;
+        }
+
+        [MenuItem(MenuPath + "Find Asset By Path", false, MenuPriority)]
+        private static void Menu_FindByPath()
+        {
+            InputDialogWindow inputDialog = InputDialogWindow.Create("Find asset by path");
+            inputDialog.description = "Enter the path:";
+            void InputDialogConfirmCallback(string input)
+            {
+                Object asset = AssetDatabase.LoadAssetAtPath<Object>(input);
+                if (asset)
+                {
+                    Selection.activeObject = asset;
+                    Debug.Log($"[{LogHeader}] Asset found! Path: <color={LogKeyColor}>{input}</color>\n\n\n");
+                }
+                else
+                {
+                    Debug.LogWarning($"[{LogHeader}] There is no asset with Path: <color={LogValueColor}>{input}</color>");
                 }
             }
             inputDialog.confirmCallback = InputDialogConfirmCallback;
