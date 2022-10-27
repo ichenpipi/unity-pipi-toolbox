@@ -13,7 +13,7 @@ namespace PipiToolbox.Editor
     /// 资源信息工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221017</version>
+    /// <version>20221026</version>
     public static class AssetInfoTools
     {
 
@@ -46,7 +46,7 @@ namespace PipiToolbox.Editor
         /// 打印全部信息
         /// </summary>
         [MenuItem(MenuPath + "All", false, MenuPriority)]
-        public static void PrintAll()
+        private static void PrintAll()
         {
             PrintName();
             PrintTypeName();
@@ -61,8 +61,9 @@ namespace PipiToolbox.Editor
         /// 打印名称
         /// </summary>
         [MenuItem(MenuPath + "Name", false, MenuPriority)]
-        public static void PrintName()
+        private static void PrintName()
         {
+            if (!Selection.activeObject) return;
             string name = Selection.activeObject.name;
             Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Name</color>: <color={LogValueColor}>{name}</color>", Selection.activeObject);
         }
@@ -71,8 +72,9 @@ namespace PipiToolbox.Editor
         /// 打印类型名称
         /// </summary>
         [MenuItem(MenuPath + "Type Name", false, MenuPriority)]
-        public static void PrintTypeName()
+        private static void PrintTypeName()
         {
+            if (!Selection.activeObject) return;
             string name = Selection.activeObject.GetType().Name;
             Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Type Name</color>: <color={LogValueColor}>{name}</color>", Selection.activeObject);
         }
@@ -81,8 +83,9 @@ namespace PipiToolbox.Editor
         /// 打印相对路径
         /// </summary>
         [MenuItem(MenuPath + "Path", false, MenuPriority)]
-        public static void PrintRelativePath()
+        private static void PrintRelativePath()
         {
+            if (!Selection.activeObject) return;
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Relative Path</color>: <color={LogValueColor}>{path}</color>", Selection.activeObject);
         }
@@ -91,8 +94,9 @@ namespace PipiToolbox.Editor
         /// 打印绝对路径
         /// </summary>
         [MenuItem(MenuPath + "Absolute Path", false, MenuPriority)]
-        public static void PrintAbsolutePath()
+        private static void PrintAbsolutePath()
         {
+            if (!Selection.activeObject) return;
             string path = GetAbsolutePath(Selection.activeObject);
             Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Absolute Path</color>: <color={LogValueColor}>{path}</color>", Selection.activeObject);
         }
@@ -101,8 +105,9 @@ namespace PipiToolbox.Editor
         /// 打印 GUID 和 File ID
         /// </summary>
         [MenuItem(MenuPath + "GUID and File ID", false, MenuPriority)]
-        public static void PrintGUIDAndFileID()
+        private static void PrintGUIDAndFileID()
         {
+            if (!Selection.activeObject) return;
             AssetDatabase.TryGetGUIDAndLocalFileIdentifier(Selection.activeObject, out string guid, out long localId);
             Debug.Log($"[{LogHeader}] <color={LogKeyColor}>GUID</color>: <color={LogValueColor}>{guid}</color>", Selection.activeObject);
             Debug.Log($"[{LogHeader}] <color={LogKeyColor}>File ID (Local ID, Local Identifier In File)</color>: <color={LogValueColor}>{localId}</color>", Selection.activeObject);
@@ -112,8 +117,9 @@ namespace PipiToolbox.Editor
         /// 打印 Instance ID
         /// </summary>
         [MenuItem(MenuPath + "Instance ID", false, MenuPriority)]
-        public static void PrintInstanceID()
+        private static void PrintInstanceID()
         {
+            if (!Selection.activeObject) return;
             int instanceID = Selection.activeObject.GetInstanceID();
             Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Instance ID</color>: <color={LogValueColor}>{instanceID}</color>", Selection.activeObject);
         }
@@ -122,8 +128,9 @@ namespace PipiToolbox.Editor
         /// 打印 AssetBundle 名称
         /// </summary>
         [MenuItem(MenuPath + "AssetBundle Name", false, MenuPriority)]
-        public static void PrintAssetBundleName()
+        private static void PrintAssetBundleName()
         {
+            if (!Selection.activeObject) return;
             string name = GetAssetBundleName(Selection.activeObject);
             if (string.IsNullOrEmpty(name))
             {
@@ -139,7 +146,7 @@ namespace PipiToolbox.Editor
         /// 复制相对路径到系统剪切板
         /// </summary>
         [MenuItem(MenuPath + "Copy Path", false, MenuPriority + 11)]
-        public static void CopyRelativePath()
+        private static void CopyRelativePath()
         {
             List<string> list = new List<string>();
             foreach (string guid in Selection.assetGUIDs)
@@ -154,7 +161,7 @@ namespace PipiToolbox.Editor
         /// 复制 AssetBundle 名称到系统剪切板
         /// </summary>
         [MenuItem(MenuPath + "Copy AssetBundle Name", false, MenuPriority + 11)]
-        public static void CopyAssetBundleName()
+        private static void CopyAssetBundleName()
         {
             List<string> list = new List<string>();
             foreach (string guid in Selection.assetGUIDs)
