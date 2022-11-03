@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -51,7 +52,26 @@ namespace PipiToolbox.Editor
             foreach (string guid in guids)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                string assetBundleName = assetPath.Remove(0, 7).ToLower();
+                string assetBundleName = assetPath.Substring("Assets/".Length);
+                if (assetBundleName.LastIndexOf(".", StringComparison.Ordinal) != -1)
+                {
+                    assetBundleName = assetBundleName.Substring(0, assetBundleName.LastIndexOf(".", StringComparison.Ordinal));
+                }
+                await SetAssetBundleName(assetPath, assetBundleName);
+            }
+        }
+
+        /// <summary>
+        /// 根据资源的路径设置资源的 AssetBundle 名称
+        /// </summary>
+        [MenuItem(MenuPath + "Set AssetBundle Name Based On Path (With Extension)", false, MenuPriority)]
+        private static async void Menu_SetAssetBundleNameBasedOnPath2()
+        {
+            string[] guids = Selection.assetGUIDs;
+            foreach (string guid in guids)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                string assetBundleName = assetPath.Substring("Assets/".Length);
                 await SetAssetBundleName(assetPath, assetBundleName);
             }
         }
