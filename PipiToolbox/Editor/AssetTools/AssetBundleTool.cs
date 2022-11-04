@@ -13,7 +13,7 @@ namespace PipiToolbox.Editor
     /// AssetBundle 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220927</version>
+    /// <version>20221104</version>
     public static class AssetBundleTool
     {
 
@@ -100,7 +100,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 批量设置多个资源的 AssetBundle 名称
         /// </summary>
-        [MenuItem(MenuPath + "Batch Setting AssetBundle Name", false, MenuPriority)]
+        [MenuItem(MenuPath + "Set AssetBundle Name (Multi-asset support)", false, MenuPriority)]
         private static void Menu_BatchSettingAssetBundleName()
         {
             InputDialogWindow inputDialog = InputDialogWindow.Create("New AssetBundle Name");

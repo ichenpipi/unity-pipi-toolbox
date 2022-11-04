@@ -12,7 +12,7 @@ namespace PipiToolbox.Editor
     /// Sprite 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220927</version>
+    /// <version>20221104</version>
     public static class SpriteTool
     {
 
@@ -44,7 +44,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 批量设置 Sprite 资源的 Packing Tag
         /// </summary>
-        [MenuItem(MenuPath + "Batch Setting Sprite Packing Tag", false, MenuPriority)]
+        [MenuItem(MenuPath + "Set Sprite Packing Tag (Multi-asset support)", false, MenuPriority)]
         private static void Menu_BatchSettingSpritePackingTag()
         {
             InputDialogWindow inputDialog = InputDialogWindow.Create("New Packing Tag");

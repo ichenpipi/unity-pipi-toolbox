@@ -9,7 +9,7 @@ namespace PipiToolbox.Editor
     /// 输入框窗口
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220829</version>
+    /// <version>20221104</version>
     public class InputDialogWindow : EditorWindow
     {
 
@@ -50,7 +50,12 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 输入内容
         /// </summary>
-        private string inputContent = "";
+        public string inputContent = "";
+
+        /// <summary>
+        /// 占位符
+        /// </summary>
+        public string placeholder = "Text here...";
 
         /// <summary>
         /// 确认按钮文本
@@ -158,7 +163,23 @@ namespace PipiToolbox.Editor
             // 名称输入
             EditorGUILayout.BeginHorizontal();
             {
+                // 输入框
                 inputContent = EditorGUILayout.TextArea(inputContent, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+                // 占位符
+                if (string.IsNullOrEmpty(inputContent)) {
+                    Rect pos = new Rect(GUILayoutUtility.GetLastRect());
+                    GUIStyle style = new GUIStyle
+                    {
+                        alignment = TextAnchor.UpperLeft,
+                        padding = new RectOffset(3, 0, 2, 0),
+                        fontStyle = FontStyle.Italic,
+                        normal =
+                        {
+                            textColor = Color.grey
+                        }
+                    };
+                    EditorGUI.LabelField(pos, placeholder, style);
+                }
             }
             EditorGUILayout.EndHorizontal();
 
