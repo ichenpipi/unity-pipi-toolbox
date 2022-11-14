@@ -47,8 +47,9 @@ namespace PipiToolbox.Editor
                 string assetPath = AssetDatabase.GUIDToAssetPath(input);
                 if (!string.IsNullOrEmpty(assetPath))
                 {
-                    Selection.activeObject = AssetDatabase.LoadAssetAtPath<Object>(assetPath);
-                    Debug.Log($"[{LogHeader}] Asset found! GUID: <color={LogKeyColor}>{input}</color> => Path: <color={LogValueColor}>{assetPath}</color>\n\n\n");
+                    Object asset = AssetDatabase.LoadAssetAtPath<Object>(assetPath);
+                    Selection.activeObject = asset;
+                    Debug.Log($"[{LogHeader}] Asset found! GUID: <color={LogKeyColor}>{input}</color> => Path: <color={LogValueColor}>{assetPath}</color>\n\n\n", asset);
                 }
                 else
                 {
@@ -69,7 +70,7 @@ namespace PipiToolbox.Editor
                 if (asset)
                 {
                     Selection.activeObject = asset;
-                    Debug.Log($"[{LogHeader}] Asset found! Path: <color={LogKeyColor}>{input}</color>\n\n\n");
+                    Debug.Log($"[{LogHeader}] Asset found! Path: <color={LogKeyColor}>{input}</color>\n\n\n", asset);
                 }
                 else
                 {
