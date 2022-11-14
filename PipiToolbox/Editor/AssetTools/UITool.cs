@@ -61,7 +61,7 @@ namespace PipiToolbox.Editor
             Move((RectTransform) Selection.activeTransform, Vector2.right);
         }
 
-        [MenuItem(MenuPath + "Rotate clockwise (1 degree) %#RIGHT", false, MenuPriority)]
+        [MenuItem(MenuPath + "Rotate Clockwise (1 degree) %#RIGHT", false, MenuPriority)]
         private static void Menu_RotateClockwise()
         {
             Rotate((RectTransform) Selection.activeTransform, -1f);
