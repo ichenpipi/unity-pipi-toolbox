@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace PipiToolbox.Editor
 {
+
     /// <summary>
     /// UI 工具
     /// </summary>
@@ -97,10 +98,9 @@ namespace PipiToolbox.Editor
         /// <param name="movement"></param>
         private static void Move(RectTransform transform, Vector2 movement)
         {
-            if (transform)
-            {
-                transform.anchoredPosition += movement;
-            }
+            if (transform == null) return;
+            Undo.RegisterFullObjectHierarchyUndo(transform, "Update position");
+            transform.anchoredPosition += movement;
         }
 
         /// <summary>
@@ -110,10 +110,11 @@ namespace PipiToolbox.Editor
         /// <param name="zAngle"></param>
         private static void Rotate(RectTransform transform, float zAngle)
         {
-            if (transform)
-            {
-                transform.Rotate(0, 0, zAngle);
-            }
+            if (transform == null) return;
+            Undo.RegisterFullObjectHierarchyUndo(transform, "Update rotation");
+            transform.Rotate(0, 0, zAngle);
         }
+
     }
+
 }
