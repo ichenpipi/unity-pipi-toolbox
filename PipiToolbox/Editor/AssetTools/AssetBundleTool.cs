@@ -20,12 +20,12 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.BaseMenuPath + "AssetBundle Tool/";
+        private const string MenuPath = PipiToolbox.AssetsMenuBasePath + "AssetBundle Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 110;
+        private const int MenuPriority = PipiToolbox.AssetsMenuBasePriority + 110;
 
         /// <summary>
         /// Log 头部信息

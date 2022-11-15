@@ -20,12 +20,12 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.BaseMenuPath + "SVN/";
+        private const string MenuPath = PipiToolbox.AssetsMenuBasePath + "SVN/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 50;
+        private const int MenuPriority = PipiToolbox.AssetsMenuBasePriority + 50;
 
         private static class Operation
         {

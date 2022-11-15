@@ -19,12 +19,12 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.BaseMenuPath + "Sprite Tool/";
+        private const string MenuPath = PipiToolbox.AssetsMenuBasePath + "Sprite Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 130;
+        private const int MenuPriority = PipiToolbox.AssetsMenuBasePriority + 130;
 
         /// <summary>
         /// Log 头部信息

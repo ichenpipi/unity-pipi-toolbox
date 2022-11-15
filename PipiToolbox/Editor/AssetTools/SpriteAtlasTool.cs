@@ -21,12 +21,12 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.BaseMenuPath + "SpriteAtlas Tool/";
+        private const string MenuPath = PipiToolbox.AssetsMenuBasePath + "SpriteAtlas Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 120;
+        private const int MenuPriority = PipiToolbox.AssetsMenuBasePriority + 120;
 
         /// <summary>
         /// Log 头部信息

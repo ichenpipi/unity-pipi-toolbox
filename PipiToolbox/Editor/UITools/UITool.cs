@@ -3,24 +3,23 @@ using UnityEngine;
 
 namespace PipiToolbox.Editor
 {
-
     /// <summary>
     /// UI 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221114</version>
+    /// <version>20221115</version>
     public static class UITool
     {
 
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.BaseMenuPath + "UI Tool/";
+        private const string MenuPath = PipiToolbox.GameObjectMenuBasePath + "UI Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.BaseMenuPriority + 52;
+        private const int MenuPriority = PipiToolbox.GameObjectMenuBasePriority + 0;
 
         /// <summary>
         /// Log 头部信息
@@ -37,36 +36,54 @@ namespace PipiToolbox.Editor
         /// </summary>
         private const string LogValueColor = "yellow";
 
-        [MenuItem(MenuPath + "Move Up (1px) %UP", false, MenuPriority)]
+        /// <summary>
+        /// Ctrl + ↑
+        /// </summary>
+        [MenuItem(MenuPath + "Move Up (1 pixel) %UP", false, MenuPriority)]
         private static void Menu_MoveUp()
         {
             Move((RectTransform) Selection.activeTransform, Vector2.up);
         }
 
-        [MenuItem(MenuPath + "Move Down (1px) %DOWN", false, MenuPriority)]
+        /// <summary>
+        /// Ctrl + ↓
+        /// </summary>
+        [MenuItem(MenuPath + "Move Down (1 pixel) %DOWN", false, MenuPriority)]
         private static void Menu_MoveDown()
         {
             Move((RectTransform) Selection.activeTransform, Vector2.down);
         }
 
-        [MenuItem(MenuPath + "Move Left (1px) %LEFT", false, MenuPriority)]
+        /// <summary>
+        /// Ctrl + ←
+        /// </summary>
+        [MenuItem(MenuPath + "Move Left (1 pixel) %LEFT", false, MenuPriority)]
         private static void Menu_MoveLeft()
         {
             Move((RectTransform) Selection.activeTransform, Vector2.left);
         }
 
-        [MenuItem(MenuPath + "Move Right (1px) %RIGHT", false, MenuPriority)]
+        /// <summary>
+        /// Ctrl + →
+        /// </summary>
+        [MenuItem(MenuPath + "Move Right (1 pixel) %RIGHT", false, MenuPriority)]
         private static void Menu_MoveRight()
         {
             Move((RectTransform) Selection.activeTransform, Vector2.right);
         }
 
+        /// <summary>
+        /// Ctrl + Shift + ←
+        /// </summary>
         [MenuItem(MenuPath + "Rotate Clockwise (1 degree) %#RIGHT", false, MenuPriority)]
         private static void Menu_RotateClockwise()
         {
             Rotate((RectTransform) Selection.activeTransform, -1f);
         }
 
+        /// <summary>
+        /// Ctrl + Shift + →
+        /// </summary>
         [MenuItem(MenuPath + "Rotate Anti-clockwise (1 degree) %#LEFT", false, MenuPriority)]
         private static void Menu_RotateAnticlockwise()
         {
@@ -98,7 +115,5 @@ namespace PipiToolbox.Editor
                 transform.Rotate(0, 0, zAngle);
             }
         }
-
     }
-
 }

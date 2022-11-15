@@ -12,17 +12,33 @@ namespace PipiToolbox.Editor
     {
 
         /// <summary>
-        /// 菜单项路径
+        /// 资源菜单项路径
         /// </summary>
-        public const string BaseMenuPath = "Assets/Pipi Toolbox 😼/";
+        public const string AssetsMenuBasePath = "Assets/Pipi Toolbox 😼/";
 
         /// <summary>
-        /// 菜单项优先级
+        /// 资源菜单项优先级
         /// </summary>
-        public const int BaseMenuPriority = 8;
+        public const int AssetsMenuBasePriority = 8;
 
-        [MenuItem(BaseMenuPath, false, BaseMenuPriority)]
-        public static void Menu()
+        /// <summary>
+        /// 节点菜单项路径
+        /// </summary>
+        public const string GameObjectMenuBasePath = "GameObject/Pipi Toolbox 😼/";
+
+        /// <summary>
+        /// 节点菜单项优先级
+        /// </summary>
+        public const int GameObjectMenuBasePriority = 11;
+
+        [MenuItem(AssetsMenuBasePath, false, AssetsMenuBasePriority)]
+        public static void AssetsMenu()
+        {
+
+        }
+
+        [MenuItem(GameObjectMenuBasePath, false, GameObjectMenuBasePriority)]
+        public static void GameObjectMenu()
         {
 
         }
