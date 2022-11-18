@@ -8,7 +8,7 @@ namespace PipiToolbox.Editor
     /// UI 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221115</version>
+    /// <version>20221118</version>
     public static class UITool
     {
 
@@ -43,7 +43,10 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Move Up (1 pixel) %UP", false, MenuPriority)]
         private static void Menu_MoveUp()
         {
-            Move((RectTransform) Selection.activeTransform, Vector2.up);
+            if (Selection.activeTransform is RectTransform rectTransform)
+            {
+                Move(rectTransform, Vector2.up);
+            }
         }
 
         /// <summary>
@@ -52,7 +55,10 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Move Down (1 pixel) %DOWN", false, MenuPriority)]
         private static void Menu_MoveDown()
         {
-            Move((RectTransform) Selection.activeTransform, Vector2.down);
+            if (Selection.activeTransform is RectTransform rectTransform)
+            {
+                Move(rectTransform, Vector2.down);
+            }
         }
 
         /// <summary>
@@ -61,7 +67,10 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Move Left (1 pixel) %LEFT", false, MenuPriority)]
         private static void Menu_MoveLeft()
         {
-            Move((RectTransform) Selection.activeTransform, Vector2.left);
+            if (Selection.activeTransform is RectTransform rectTransform)
+            {
+                Move(rectTransform, Vector2.left);
+            }
         }
 
         /// <summary>
@@ -70,7 +79,10 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Move Right (1 pixel) %RIGHT", false, MenuPriority)]
         private static void Menu_MoveRight()
         {
-            Move((RectTransform) Selection.activeTransform, Vector2.right);
+            if (Selection.activeTransform is RectTransform rectTransform)
+            {
+                Move(rectTransform, Vector2.right);
+            }
         }
 
         /// <summary>
@@ -79,7 +91,10 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Rotate Clockwise (1 degree) %#RIGHT", false, MenuPriority)]
         private static void Menu_RotateClockwise()
         {
-            Rotate((RectTransform) Selection.activeTransform, -1f);
+            if (Selection.activeTransform is RectTransform rectTransform)
+            {
+                Rotate(rectTransform, -1f);
+            }
         }
 
         /// <summary>
@@ -88,7 +103,10 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Rotate Anti-clockwise (1 degree) %#LEFT", false, MenuPriority)]
         private static void Menu_RotateAnticlockwise()
         {
-            Rotate((RectTransform) Selection.activeTransform, 1f);
+            if (Selection.activeTransform is RectTransform rectTransform)
+            {
+                Rotate(rectTransform, 1f);
+            }
         }
 
         /// <summary>
