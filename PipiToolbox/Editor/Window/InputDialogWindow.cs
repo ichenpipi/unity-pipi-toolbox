@@ -9,7 +9,7 @@ namespace PipiToolbox.Editor
     /// 输入框窗口
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221104</version>
+    /// <version>20221118</version>
     public class InputDialogWindow : EditorWindow
     {
 
@@ -164,7 +164,7 @@ namespace PipiToolbox.Editor
             EditorGUILayout.BeginHorizontal();
             {
                 // 输入框
-                inputContent = EditorGUILayout.TextArea(inputContent, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+                inputContent = EditorGUILayout.TextArea(inputContent, GUILayout.MinWidth(0), GUILayout.ExpandHeight(true));
                 // 占位符
                 if (string.IsNullOrEmpty(inputContent)) {
                     Rect pos = new Rect(GUILayoutUtility.GetLastRect());
