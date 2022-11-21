@@ -23,22 +23,7 @@ namespace PipiToolbox.Editor
         private const int MenuPriority = PipiToolbox.GameObjectMenuBasePriority + 0;
 
         /// <summary>
-        /// Log 头部信息
-        /// </summary>
-        private const string LogHeader = "SearchTool";
-
-        /// <summary>
-        /// Log 键颜色
-        /// </summary>
-        private const string LogKeyColor = "white";
-
-        /// <summary>
-        /// Log 值颜色
-        /// </summary>
-        private const string LogValueColor = "yellow";
-
-        /// <summary>
-        /// Ctrl + ↑
+        /// 上移（Ctrl + ↑）
         /// </summary>
         [MenuItem(MenuPath + "Move Up (1 pixel) %UP", false, MenuPriority)]
         private static void Menu_MoveUp()
@@ -50,7 +35,7 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
-        /// Ctrl + ↓
+        /// 下移（Ctrl + ↓）
         /// </summary>
         [MenuItem(MenuPath + "Move Down (1 pixel) %DOWN", false, MenuPriority)]
         private static void Menu_MoveDown()
@@ -62,7 +47,7 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
-        /// Ctrl + ←
+        /// 左移（Ctrl + ←）
         /// </summary>
         [MenuItem(MenuPath + "Move Left (1 pixel) %LEFT", false, MenuPriority)]
         private static void Menu_MoveLeft()
@@ -74,7 +59,7 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
-        /// Ctrl + →
+        /// 右移（Ctrl + →）
         /// </summary>
         [MenuItem(MenuPath + "Move Right (1 pixel) %RIGHT", false, MenuPriority)]
         private static void Menu_MoveRight()
@@ -86,7 +71,7 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
-        /// Ctrl + Shift + ←
+        /// 顺时针选择（Ctrl + Shift + ←）
         /// </summary>
         [MenuItem(MenuPath + "Rotate Clockwise (1 degree) %#RIGHT", false, MenuPriority)]
         private static void Menu_RotateClockwise()
@@ -98,7 +83,7 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
-        /// Ctrl + Shift + →
+        /// 逆时针旋转（Ctrl + Shift + →）
         /// </summary>
         [MenuItem(MenuPath + "Rotate Anti-clockwise (1 degree) %#LEFT", false, MenuPriority)]
         private static void Menu_RotateAnticlockwise()
@@ -112,25 +97,25 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 移动
         /// </summary>
-        /// <param name="transform"></param>
+        /// <param name="rectTransform"></param>
         /// <param name="movement"></param>
-        private static void Move(RectTransform transform, Vector2 movement)
+        private static void Move(RectTransform rectTransform, Vector2 movement)
         {
-            if (transform == null) return;
-            Undo.RegisterFullObjectHierarchyUndo(transform, "Update position");
-            transform.anchoredPosition += movement;
+            if (rectTransform == null) return;
+            Undo.RegisterFullObjectHierarchyUndo(rectTransform, "Update position");
+            rectTransform.anchoredPosition += movement;
         }
 
         /// <summary>
         /// 旋转
         /// </summary>
-        /// <param name="transform"></param>
+        /// <param name="rectTransform"></param>
         /// <param name="zAngle"></param>
-        private static void Rotate(RectTransform transform, float zAngle)
+        private static void Rotate(RectTransform rectTransform, float zAngle)
         {
-            if (transform == null) return;
-            Undo.RegisterFullObjectHierarchyUndo(transform, "Update rotation");
-            transform.Rotate(0, 0, zAngle);
+            if (rectTransform == null) return;
+            Undo.RegisterFullObjectHierarchyUndo(rectTransform, "Update rotation");
+            rectTransform.Rotate(0, 0, zAngle);
         }
 
     }
