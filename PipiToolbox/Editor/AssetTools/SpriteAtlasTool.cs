@@ -64,14 +64,14 @@ namespace PipiToolbox.Editor
             if (sprites.Length == 0) return;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [MenuItem(MenuPath + "Create SpriteAtlas Based On Sprite Tag", false, MenuPriority)]
-        private static void Menu_CreateSpriteAtlasBasedOnSpriteTag()
-        {
-
-        }
+        // /// <summary>
+        // /// 
+        // /// </summary>
+        // [MenuItem(MenuPath + "Create SpriteAtlas Based On Sprite Tag", false, MenuPriority)]
+        // private static void Menu_CreateSpriteAtlasBasedOnSpriteTag()
+        // {
+        //
+        // }
 
         /// <summary>
         /// 添加当前选中的 Sprite 资源到已有的 SpriteAtlas
