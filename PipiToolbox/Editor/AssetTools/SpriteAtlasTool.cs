@@ -14,7 +14,7 @@ namespace PipiToolbox.Editor
     /// SpriteAtlas 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220927</version>
+    /// <version>20221128</version>
     public static class SpriteAtlasTool
     {
 
@@ -86,10 +86,12 @@ namespace PipiToolbox.Editor
                 Debug.Log($"[{LogHeader}] No sprite asset found at current selection.");
                 return;
             }
-            // 选择已有的图集
+            // 选择已有的图集并添加
             SpriteAtlas spriteAtlas = PickExistingSpriteAtlas();
-            // 添加
-            AddSpritesToSpriteAtlas(spriteAtlas, sprites);
+            if (spriteAtlas)
+            {
+                AddSpritesToSpriteAtlas(spriteAtlas, sprites);
+            }
         }
 
         /// <summary>
@@ -211,7 +213,7 @@ namespace PipiToolbox.Editor
             const string extension = "spriteatlas";
             string directory = SpriteAtlasFolderPath;
             string path = EditorUtility.OpenFilePanel(title, directory, extension);
-            return AssetDatabase.LoadAssetAtPath<SpriteAtlas>(GetAssetRelativePath(path));
+            return string.IsNullOrEmpty(path) ? null : AssetDatabase.LoadAssetAtPath<SpriteAtlas>(GetAssetRelativePath(path));
         }
 
         /// <summary>
