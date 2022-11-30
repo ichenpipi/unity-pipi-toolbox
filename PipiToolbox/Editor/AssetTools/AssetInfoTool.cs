@@ -13,7 +13,7 @@ namespace PipiToolbox.Editor
     /// 资源信息工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221026</version>
+    /// <version>20221130</version>
     public static class AssetInfoTools
     {
 
@@ -155,7 +155,7 @@ namespace PipiToolbox.Editor
                 Object asset = AssetDatabase.LoadAssetAtPath<Object>(path);
                 list.Add(asset.name);
             }
-            GUIUtility.systemCopyBuffer = Join(list, ", ");
+            SaveToClipboard(Join(list, ", "));
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace PipiToolbox.Editor
                 string path = AssetDatabase.GUIDToAssetPath(guid);
                 list.Add(path);
             }
-            GUIUtility.systemCopyBuffer = Join(list, ", ");
+            SaveToClipboard(Join(list, ", "));
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace PipiToolbox.Editor
                 Object asset = AssetDatabase.LoadAssetAtPath<Object>(path);
                 list.Add(GetAssetBundleName(asset));
             }
-            GUIUtility.systemCopyBuffer = Join(list, ", ");
+            SaveToClipboard(Join(list, ", "));
         }
 
         /// <summary>
@@ -231,6 +231,15 @@ namespace PipiToolbox.Editor
                 }
             }
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// 保存内容到系统剪切板
+        /// </summary>
+        /// <param name="content"></param>
+        private static void SaveToClipboard(string content)
+        {
+            GUIUtility.systemCopyBuffer = content;
         }
 
     }

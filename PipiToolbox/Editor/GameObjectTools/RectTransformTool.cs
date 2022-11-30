@@ -9,18 +9,18 @@ namespace PipiToolbox.Editor
     /// </summary>
     /// <author>陈皮皮</author>
     /// <version>20221118</version>
-    public static class UITool
+    public static class RectTransformTool
     {
 
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.GameObjectMenuBasePath + "UI Tool/";
+        private const string MenuPath = PipiToolbox.GameObjectMenuBasePath + "RectTransform Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.GameObjectMenuBasePriority + 0;
+        private const int MenuPriority = PipiToolbox.GameObjectMenuBasePriority + 101;
 
         /// <summary>
         /// 上移（Ctrl + ↑）

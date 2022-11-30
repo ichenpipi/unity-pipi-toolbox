@@ -29,7 +29,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 节点菜单项优先级
         /// </summary>
-        public const int GameObjectMenuBasePriority = 11;
+        public const int GameObjectMenuBasePriority = 0;
 
         [MenuItem(AssetsMenuBasePath, false, AssetsMenuBasePriority)]
         public static void AssetsMenu()
