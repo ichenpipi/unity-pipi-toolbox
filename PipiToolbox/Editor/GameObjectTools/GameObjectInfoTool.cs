@@ -5,7 +5,7 @@ namespace PipiToolbox.Editor
 {
 
     /// <summary>
-    /// 信息工具
+    /// GameObject 信息工具
     /// </summary>
     /// <author>陈皮皮</author>
     /// <version>20221130</version>
@@ -28,10 +28,36 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Copy Name", false, MenuPriority)]
         private static void Menu_CopyName()
         {
-            if (Selection.activeGameObject)
+            if (!Selection.activeGameObject) return;
+            SaveToClipboard(Selection.activeGameObject.name);
+        }
+
+        /// <summary>
+        /// 复制路径
+        /// </summary>
+        [MenuItem(MenuPath + "Copy Path", false, 0)]
+        public static void Menu_CopyPath()
+        {
+            if (!Selection.activeGameObject) return;
+            string path = GetGameObjectPath(Selection.activeGameObject);
+            SaveToClipboard(path);
+        }
+
+        /// <summary>
+        /// 获取 GameObject 的路径
+        /// </summary>
+        private static string GetGameObjectPath(GameObject gameObject)
+        {
+            if (!gameObject)
             {
-                SaveToClipboard(Selection.activeGameObject.name);
+                return string.Empty;
             }
+            Transform transform = gameObject.transform;
+            if (!transform.parent)
+            {
+                return transform.name;
+            }
+            return string.Concat(GetGameObjectPath(transform.parent.gameObject), "/", transform.name);
         }
 
         /// <summary>

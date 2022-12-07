@@ -5,7 +5,7 @@ namespace PipiToolbox.Editor
 {
 
     /// <summary>
-    /// UI 工具
+    /// RectTransform 工具
     /// </summary>
     /// <author>陈皮皮</author>
     /// <version>20221118</version>
@@ -20,7 +20,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.GameObjectMenuBasePriority + 101;
+        private const int MenuPriority = PipiToolbox.GameObjectMenuBasePriority + 201;
 
         /// <summary>
         /// 上移（Ctrl + ↑）
