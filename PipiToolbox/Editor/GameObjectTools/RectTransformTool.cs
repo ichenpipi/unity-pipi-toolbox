@@ -8,7 +8,7 @@ namespace PipiToolbox.Editor
     /// RectTransform 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221118</version>
+    /// <version>20221213</version>
     public static class RectTransformTool
     {
 
@@ -28,10 +28,7 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Move Up (1 pixel) %UP", false, MenuPriority)]
         private static void Menu_MoveUp()
         {
-            if (Selection.activeTransform is RectTransform rectTransform)
-            {
-                Move(rectTransform, Vector2.up);
-            }
+            Move(Selection.transforms, Vector2.up);
         }
 
         /// <summary>
@@ -40,10 +37,7 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Move Down (1 pixel) %DOWN", false, MenuPriority)]
         private static void Menu_MoveDown()
         {
-            if (Selection.activeTransform is RectTransform rectTransform)
-            {
-                Move(rectTransform, Vector2.down);
-            }
+            Move(Selection.transforms, Vector2.down);
         }
 
         /// <summary>
@@ -52,10 +46,7 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Move Left (1 pixel) %LEFT", false, MenuPriority)]
         private static void Menu_MoveLeft()
         {
-            if (Selection.activeTransform is RectTransform rectTransform)
-            {
-                Move(rectTransform, Vector2.left);
-            }
+            Move(Selection.transforms, Vector2.left);
         }
 
         /// <summary>
@@ -64,10 +55,7 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Move Right (1 pixel) %RIGHT", false, MenuPriority)]
         private static void Menu_MoveRight()
         {
-            if (Selection.activeTransform is RectTransform rectTransform)
-            {
-                Move(rectTransform, Vector2.right);
-            }
+            Move(Selection.transforms, Vector2.right);
         }
 
         /// <summary>
@@ -76,10 +64,7 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Rotate Clockwise (1 degree) %#RIGHT", false, MenuPriority)]
         private static void Menu_RotateClockwise()
         {
-            if (Selection.activeTransform is RectTransform rectTransform)
-            {
-                Rotate(rectTransform, -1f);
-            }
+            Rotate(Selection.transforms, -1f);
         }
 
         /// <summary>
@@ -88,10 +73,7 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Rotate Anti-clockwise (1 degree) %#LEFT", false, MenuPriority)]
         private static void Menu_RotateAnticlockwise()
         {
-            if (Selection.activeTransform is RectTransform rectTransform)
-            {
-                Rotate(rectTransform, 1f);
-            }
+            Rotate(Selection.transforms, 1f);
         }
 
         /// <summary>
@@ -107,6 +89,20 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
+        /// 移动
+        /// </summary>
+        /// <param name="transforms"></param>
+        /// <param name="movement"></param>
+        private static void Move(Transform[] transforms, Vector2 movement)
+        {
+            foreach (Transform transform in transforms)
+            {
+                if (!(transform is RectTransform rectTransform)) continue;
+                Move(rectTransform, movement);
+            }
+        }
+
+        /// <summary>
         /// 旋转
         /// </summary>
         /// <param name="rectTransform"></param>
@@ -116,6 +112,20 @@ namespace PipiToolbox.Editor
             if (rectTransform == null) return;
             Undo.RegisterFullObjectHierarchyUndo(rectTransform, "Update rotation");
             rectTransform.Rotate(0, 0, zAngle);
+        }
+
+        /// <summary>
+        /// 旋转
+        /// </summary>
+        /// <param name="transforms"></param>
+        /// <param name="zAngle"></param>
+        private static void Rotate(Transform[] transforms, float zAngle)
+        {
+            foreach (Transform transform in transforms)
+            {
+                if (!(transform is RectTransform rectTransform)) continue;
+                Rotate(rectTransform, zAngle);
+            }
         }
 
     }
