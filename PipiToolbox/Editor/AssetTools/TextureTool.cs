@@ -1,5 +1,7 @@
+using System;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace PipiToolbox.Editor
 {
@@ -8,7 +10,7 @@ namespace PipiToolbox.Editor
     /// 纹理工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221214</version>
+    /// <version>20221215</version>
     public static class TextureTool
     {
 
@@ -38,27 +40,72 @@ namespace PipiToolbox.Editor
         private const string LogValueColor = "yellow";
 
         /// <summary>
+        /// 尺寸调整模式
+        /// </summary>
+        public enum ResizeMode
+        {
+            /// <summary>
+            /// 扩充
+            /// </summary>
+            Expand = 1,
+
+            /// <summary>
+            /// 裁剪
+            /// </summary>
+            Clip = 2,
+        }
+
+        /// <summary>
         /// 调整纹理的尺寸到 4 的倍数
         /// </summary>
-        [MenuItem(MenuPath + "Resize to multiple of 4 (Multi-asset support)", false, MenuPriority)]
-        private static void Menu_ResizeToMultipleOf4()
+        [MenuItem(MenuPath + "Resize to multiple of 4 (Multi-asset support)/Expand (Ceil)", false, MenuPriority)]
+        private static void Menu_ResizeToMultipleOf4_Expand()
+        {
+            ResizeSelectionToMultipleOf4(ResizeMode.Expand);
+        }
+
+        /// <summary>
+        /// 调整纹理的尺寸到 4 的倍数
+        /// </summary>
+        [MenuItem(MenuPath + "Resize to multiple of 4 (Multi-asset support)/Clip (Floor)", false, MenuPriority)]
+        private static void Menu_ResizeToMultipleOf4_Clip()
+        {
+            ResizeSelectionToMultipleOf4(ResizeMode.Clip);
+        }
+
+        /// <summary>
+        /// 调整纹理的尺寸到 4 的倍数
+        /// </summary>
+        private static void ResizeSelectionToMultipleOf4(ResizeMode resizeMode)
         {
             Object[] assets = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
             foreach (Object asset in assets)
             {
                 if (!(asset is Texture2D texture)) continue;
-                ResizeToMultipleOf4(texture);
+                ResizeToMultipleOf4(texture, resizeMode);
             }
         }
 
         /// <summary>
         /// 调整纹理的尺寸到 4 的倍数
         /// </summary>
-        private static void ResizeToMultipleOf4(Texture2D texture)
+        private static void ResizeToMultipleOf4(Texture2D texture, ResizeMode resizeMode)
         {
-            // 期望尺寸
-            int desiredWidth = Mathf.RoundToInt(texture.width / 4f) * 4;
-            int desiredHeight = Mathf.RoundToInt(texture.height / 4f) * 4;
+            // 计算期望尺寸
+            int desiredWidth, desiredHeight;
+            switch (resizeMode)
+            {
+                case ResizeMode.Expand:
+                    desiredWidth = Mathf.CeilToInt(texture.width / 4f) * 4;
+                    desiredHeight = Mathf.CeilToInt(texture.height / 4f) * 4;
+                    break;
+                case ResizeMode.Clip:
+                    desiredWidth = Mathf.FloorToInt(texture.width / 4f) * 4;
+                    desiredHeight = Mathf.FloorToInt(texture.height / 4f) * 4;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(resizeMode), resizeMode, null);
+            }
             // 是否需要调整
             if (texture.width == desiredWidth && texture.height == desiredHeight)
             {

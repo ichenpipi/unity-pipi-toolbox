@@ -10,9 +10,10 @@ namespace PipiToolbox.Editor
     /// 纹理资源工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221214</version>
+    /// <version>20221215</version>
     public static class TextureUtility
     {
+
         /// <summary>
         /// 临时纹理缓存
         /// </summary>
@@ -74,9 +75,9 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 调整纹理尺寸
         /// </summary>
-        /// <param name="texture"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="texture">纹理</param>
+        /// <param name="width">宽</param>
+        /// <param name="height">高</param>
         public static void Resize(Texture2D texture, int width, int height)
         {
             string path = AssetDatabase.GetAssetPath(texture);
