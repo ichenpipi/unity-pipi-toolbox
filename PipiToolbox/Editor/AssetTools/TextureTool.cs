@@ -50,9 +50,9 @@ namespace PipiToolbox.Editor
             Expand = 1,
 
             /// <summary>
-            /// 裁剪
+            /// 缩减
             /// </summary>
-            Clip = 2,
+            Shrink = 2,
         }
 
         /// <summary>
@@ -61,22 +61,22 @@ namespace PipiToolbox.Editor
         [MenuItem(MenuPath + "Resize to multiple of 4 (Multi-asset support)/Expand (Ceil)", false, MenuPriority)]
         private static void Menu_ResizeToMultipleOf4_Expand()
         {
-            ResizeSelectionToMultipleOf4(ResizeMode.Expand);
+            Selection_ResizeToMultipleOf4(ResizeMode.Expand);
         }
 
         /// <summary>
         /// 调整纹理的尺寸到 4 的倍数
         /// </summary>
-        [MenuItem(MenuPath + "Resize to multiple of 4 (Multi-asset support)/Clip (Floor)", false, MenuPriority)]
+        [MenuItem(MenuPath + "Resize to multiple of 4 (Multi-asset support)/Shrink (Floor)", false, MenuPriority)]
         private static void Menu_ResizeToMultipleOf4_Clip()
         {
-            ResizeSelectionToMultipleOf4(ResizeMode.Clip);
+            Selection_ResizeToMultipleOf4(ResizeMode.Shrink);
         }
 
         /// <summary>
         /// 调整纹理的尺寸到 4 的倍数
         /// </summary>
-        private static void ResizeSelectionToMultipleOf4(ResizeMode resizeMode)
+        private static void Selection_ResizeToMultipleOf4(ResizeMode resizeMode)
         {
             Object[] assets = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
             foreach (Object asset in assets)
@@ -99,7 +99,7 @@ namespace PipiToolbox.Editor
                     desiredWidth = Mathf.CeilToInt(texture.width / 4f) * 4;
                     desiredHeight = Mathf.CeilToInt(texture.height / 4f) * 4;
                     break;
-                case ResizeMode.Clip:
+                case ResizeMode.Shrink:
                     desiredWidth = Mathf.FloorToInt(texture.width / 4f) * 4;
                     desiredHeight = Mathf.FloorToInt(texture.height / 4f) * 4;
                     break;
