@@ -12,7 +12,7 @@ namespace PipiToolbox.Editor
     /// Sprite 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221104</version>
+    /// <version>20221222</version>
     public static class SpriteTool
     {
 
@@ -50,6 +50,15 @@ namespace PipiToolbox.Editor
             InputDialogWindow inputDialog = InputDialogWindow.Create("New Packing Tag");
             async void InputDialogConfirmCallback(string s) => await SetSpritePackingTagByGUIDs(Selection.assetGUIDs, s);
             inputDialog.confirmCallback = InputDialogConfirmCallback;
+        }
+
+        /// <summary>
+        /// 移除 Sprite 资源的 Packing Tag
+        /// </summary>
+        [MenuItem(MenuPath + "Remove Sprite Packing Tag (Multi-asset support)", false, MenuPriority)]
+        private static void Menu_RemoveSpritePackingTag()
+        {
+            SetSpritePackingTagByGUIDs(Selection.assetGUIDs, "");
         }
 
         /// <summary>
