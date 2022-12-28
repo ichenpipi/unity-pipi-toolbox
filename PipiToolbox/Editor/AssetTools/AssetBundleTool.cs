@@ -13,7 +13,7 @@ namespace PipiToolbox.Editor
     /// AssetBundle 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221104</version>
+    /// <version>20221228</version>
     public static class AssetBundleTool
     {
 
@@ -178,6 +178,7 @@ namespace PipiToolbox.Editor
             {
                 return;
             }
+            assetBundleName = assetBundleName.ToLower();
             assetImporter.SetAssetBundleNameAndVariant(assetBundleName, assetBundleVariant);
             assetImporter.SaveAndReimport();
             Debug.Log($"[{LogHeader}] Set AssetBundle Name: <color={LogKeyColor}>{assetPath}</color> => <color={LogValueColor}>{assetBundleName}</color>", assetImporter);
