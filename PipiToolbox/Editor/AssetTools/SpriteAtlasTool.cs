@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,7 @@ using UnityEditor;
 using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.U2D;
+using Object = UnityEngine.Object;
 
 namespace PipiToolbox.Editor
 {
@@ -14,7 +16,7 @@ namespace PipiToolbox.Editor
     /// SpriteAtlas 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221128</version>
+    /// <version>20221230</version>
     public static class SpriteAtlasTool
     {
 
@@ -53,16 +55,16 @@ namespace PipiToolbox.Editor
         /// </summary>
         private static readonly string SpriteAtlasFolderPath = Path.Combine(Application.dataPath, SpriteAtlasFolderName);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [MenuItem(MenuPath + "Create SpriteAtlas With Selection", false, MenuPriority)]
-        private static void Menu_CreateSpriteAtlasWithSelection()
-        {
-            // 获取选中的 Sprite
-            Sprite[] sprites = GetAllSpritesInSelection();
-            if (sprites.Length == 0) return;
-        }
+        // /// <summary>
+        // /// 
+        // /// </summary>
+        // [MenuItem(MenuPath + "Create SpriteAtlas With Selection", false, MenuPriority)]
+        // private static void Menu_CreateSpriteAtlasWithSelection()
+        // {
+        //     // 获取选中的 Sprite
+        //     Sprite[] sprites = GetSpritesInSelection();
+        //     if (sprites.Length == 0) return;
+        // }
 
         // /// <summary>
         // /// 
@@ -80,10 +82,10 @@ namespace PipiToolbox.Editor
         private static void Menu_AddSelectionToExistingSpriteAtlas()
         {
             // 获取选中的 Sprite
-            Sprite[] sprites = GetAllSpritesInSelection();
+            Sprite[] sprites = GetSpritesInSelection();
             if (sprites.Length == 0)
             {
-                Debug.Log($"[{LogHeader}] No sprite asset found at current selection.");
+                Debug.LogWarning($"[{LogHeader}] There are no sprite assets in the current selection.");
                 return;
             }
             // 选择已有的图集并添加
@@ -103,18 +105,19 @@ namespace PipiToolbox.Editor
         {
             if (sprites.Length == 0)
             {
-                Debug.Log($"[{LogHeader}] sprite array is empty, skip adding.");
+                Debug.LogWarning($"[{LogHeader}] Sprite array is empty, skip adding.");
                 return;
             }
             // 图集路径
             string spriteAtlasPath = AssetDatabase.GetAssetPath(spriteAtlas);
             // 开始添加
             int totalCount = sprites.Length;
+            int addedCount = 0;
             for (int i = 0; i < totalCount; i++)
             {
                 Sprite sprite = sprites[i];
                 // 展示进度
-                string title = $"Add to SpriteAtlas... ({i + 1}/{totalCount})";
+                string title = $"Adding sprites to SpriteAtlas... ({i + 1}/{totalCount})";
                 string spritePath = AssetDatabase.GetAssetPath(sprite);
                 float progress = (float)(i + 1) / totalCount;
                 bool hasCanceled = EditorUtility.DisplayCancelableProgressBar(title, spritePath, progress);
@@ -122,27 +125,37 @@ namespace PipiToolbox.Editor
                 await Task.Delay(1);
                 // 是否已取消
                 if (hasCanceled) break;
+                // 是否能够添加
+                if (spriteAtlas.GetSprite(sprite.name))
+                {
+                    Debug.LogWarning($"[{LogHeader}] SpriteAtlas '{spriteAtlas.name}' already has a sprite named '{sprite.name}', skipped!");
+                    continue;
+                }
                 // 添加到图集
-                spriteAtlas.Add(new [] {sprite});
-                Debug.Log($"[{LogHeader}] Add to SpriteAtlas: <color={LogKeyColor}>{spritePath}</color> => <color={LogValueColor}>{spriteAtlasPath}</color>", sprite);
+                spriteAtlas.Add(new Object[] {sprite});
+                addedCount++;
+                Debug.Log($"[{LogHeader}] Added to SpriteAtlas: <color={LogKeyColor}>{spritePath}</color> => <color={LogValueColor}>{spriteAtlasPath}</color>", sprite);
             }
             EditorUtility.ClearProgressBar();
             // 保存
-            AssetDatabase.SaveAssets();
-            Debug.Log($"[{LogHeader}] SpriteAtlas Updated: <color={LogValueColor}>{spriteAtlasPath}</color>", spriteAtlas);
+            if (addedCount > 0)
+            {
+                AssetDatabase.SaveAssets();
+                Debug.Log($"[{LogHeader}] SpriteAtlas Updated: <color={LogValueColor}>{spriteAtlasPath}</color>", spriteAtlas);
+            }
         }
 
         /// <summary>
         /// 获取选中的 Sprite 资源
         /// </summary>
         /// <returns></returns>
-        private static Sprite[] GetAllSpritesInSelection()
+        private static Sprite[] GetSpritesInSelection()
         {
-            string[] guids = Selection.assetGUIDs;
+            Object[] assets = Selection.GetFiltered(typeof(Texture), SelectionMode.DeepAssets);
             List<Sprite> sprites = new List<Sprite>();
-            foreach (string guid in guids)
+            foreach (Object asset in assets)
             {
-                Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(AssetDatabase.GUIDToAssetPath(guid));
+                Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(AssetDatabase.GetAssetPath(asset));
                 if (sprite) sprites.Add(sprite);
             }
             return sprites.ToArray();
@@ -193,17 +206,6 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
-        /// 获取指定目录下的所有资源的路径
-        /// </summary>
-        /// <returns></returns>
-        private static string[] GetAssetsAtPath(string path)
-        {
-            return Directory.GetFiles(path, "*", SearchOption.AllDirectories)
-                .Where(p => !p.EndsWith(".meta"))
-                .ToArray();
-        }
-
-        /// <summary>
         /// 选择已有的 SpriteAtlas
         /// </summary>
         /// <returns></returns>
@@ -224,6 +226,20 @@ namespace PipiToolbox.Editor
         private static string GetAssetRelativePath(string absolutePath)
         {
             return "Assets" + absolutePath.Substring(Application.dataPath.Length).Replace("\\", "/");
+        }
+
+        /// <summary>
+        /// 转为打印用的路径
+        /// </summary>
+        /// <param name="path">路径</param>
+        /// <returns></returns>
+        private static string ToPrintPath(string path)
+        {
+            if (path.StartsWith("Assets/"))
+            {
+                path = path.Substring("Assets/".Length);
+            }
+            return path;
         }
 
     }
