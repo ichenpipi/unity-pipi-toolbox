@@ -109,8 +109,11 @@ namespace PipiToolbox.Editor
             // 是否需要调整
             if (texture.width == desiredWidth && texture.height == desiredHeight)
             {
-                TextureUtility.Resize(texture, desiredWidth, desiredHeight);
+                Debug.LogWarning($"[{LogHeader}] This texture does not need to be resized! asset path: {AssetDatabase.GetAssetPath(texture)}\n\n\n", texture);
+                return;
             }
+            Debug.Log($"[{LogHeader}] Resize texture from <color={LogValueColor}>{texture.width}x{texture.height}</color> to <color={LogValueColor}>{desiredWidth}x{desiredHeight}</color>, asset path: {AssetDatabase.GetAssetPath(texture)}\n\n\n", texture);
+            TextureUtility.Resize(texture, desiredWidth, desiredHeight);
         }
 
     }
