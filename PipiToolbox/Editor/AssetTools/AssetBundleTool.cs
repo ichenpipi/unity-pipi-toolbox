@@ -33,16 +33,6 @@ namespace PipiToolbox.Editor
         private const string LogHeader = "AssetBundle";
 
         /// <summary>
-        /// Log 键颜色
-        /// </summary>
-        private const string LogKeyColor = "white";
-
-        /// <summary>
-        /// Log 值颜色
-        /// </summary>
-        private const string LogValueColor = "yellow";
-
-        /// <summary>
         /// 根据资源的路径设置资源的 AssetBundle 名称
         /// </summary>
         [MenuItem(MenuPath + "Set AssetBundle Name Based On Path", false, MenuPriority)]
@@ -181,7 +171,7 @@ namespace PipiToolbox.Editor
             assetBundleName = assetBundleName.ToLower();
             assetImporter.SetAssetBundleNameAndVariant(assetBundleName, assetBundleVariant);
             assetImporter.SaveAndReimport();
-            Debug.Log($"[{LogHeader}] Set AssetBundle Name: <color={LogKeyColor}>{assetPath}</color> => <color={LogValueColor}>{assetBundleName}</color>", assetImporter);
+            PipiToolbox.Log(LogHeader, $"Set AssetBundle Name: <color={LogColor.Key}>{assetPath}</color> => <color={LogColor.Value}>{assetBundleName}</color>", assetImporter);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEngine;
 
 namespace PipiToolbox.Editor
 {
@@ -42,6 +43,49 @@ namespace PipiToolbox.Editor
         {
 
         }
+
+        /// <summary>
+        /// Logs a message to the Unity Console.
+        /// </summary>
+        /// <param name="header"></param>
+        /// <param name="message">String or object to be converted to string representation for display.</param>
+        /// <param name="context">Object to which the message applies.</param>
+        public static void Log(string header, string message, Object context = null)
+        {
+            Debug.Log(string.IsNullOrEmpty(header) ? $"<color={LogColor.LogBase}>{message}</color>\n\n\n" : $"<color={LogColor.LogBase}>[{header}] {message}</color>\n\n\n", context);
+        }
+
+        /// <summary>
+        /// A variant of Debug.Log that logs a warning message to the console.
+        /// </summary>
+        /// <param name="header"></param>
+        /// <param name="message">String or object to be converted to string representation for display.</param>
+        /// <param name="context">Object to which the message applies.</param>
+        public static void LogWarning(string header, string message, Object context = null)
+        {
+            Debug.LogWarning(string.IsNullOrEmpty(header) ? $"<color={LogColor.WarningBase}>{message}</color>\n\n\n" : $"<color={LogColor.WarningBase}>[{header}] {message}</color>\n\n\n", context);
+        }
+
+    }
+
+    public static class LogColor
+    {
+
+        private static class Color
+        {
+            public const string Blue = "blue";
+            public const string White = "white";
+            public const string Yellow = "yellow";
+            public const string Red = "red";
+        }
+
+        public const string LogBase = Color.Blue;
+
+        public const string WarningBase = Color.Blue;
+
+        public const string Key = Color.White;
+
+        public const string Value = Color.Yellow;
 
     }
 

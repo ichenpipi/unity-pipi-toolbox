@@ -33,16 +33,6 @@ namespace PipiToolbox.Editor
         private const string LogHeader = "AssetInfo";
 
         /// <summary>
-        /// Log 键颜色
-        /// </summary>
-        private const string LogKeyColor = "white";
-
-        /// <summary>
-        /// Log 值颜色
-        /// </summary>
-        private const string LogValueColor = "yellow";
-
-        /// <summary>
         /// 打印全部信息
         /// </summary>
         [MenuItem(MenuPath + "Print All", false, MenuPriority)]
@@ -65,7 +55,7 @@ namespace PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             string name = Selection.activeObject.name;
-            Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Name</color>: <color={LogValueColor}>{name}</color>", Selection.activeObject);
+            PipiToolbox.Log(LogHeader, $"<color={LogColor.Key}>Name</color>: <color={LogColor.Value}>{name}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -76,7 +66,7 @@ namespace PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             string name = Selection.activeObject.GetType().Name;
-            Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Type Name</color>: <color={LogValueColor}>{name}</color>", Selection.activeObject);
+            PipiToolbox.Log(LogHeader, $"<color={LogColor.Key}>Type Name</color>: <color={LogColor.Value}>{name}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -87,7 +77,7 @@ namespace PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Relative Path</color>: <color={LogValueColor}>{path}</color>", Selection.activeObject);
+            PipiToolbox.Log(LogHeader, $"<color={LogColor.Key}>Relative Path</color>: <color={LogColor.Value}>{path}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -98,7 +88,7 @@ namespace PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             string path = GetAbsolutePath(Selection.activeObject);
-            Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Absolute Path</color>: <color={LogValueColor}>{path}</color>", Selection.activeObject);
+            PipiToolbox.Log(LogHeader, $"<color={LogColor.Key}>Absolute Path</color>: <color={LogColor.Value}>{path}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -109,8 +99,8 @@ namespace PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             AssetDatabase.TryGetGUIDAndLocalFileIdentifier(Selection.activeObject, out string guid, out long localId);
-            Debug.Log($"[{LogHeader}] <color={LogKeyColor}>GUID</color>: <color={LogValueColor}>{guid}</color>", Selection.activeObject);
-            Debug.Log($"[{LogHeader}] <color={LogKeyColor}>File ID (Local ID, Local Identifier In File)</color>: <color={LogValueColor}>{localId}</color>", Selection.activeObject);
+            PipiToolbox.Log(LogHeader, $"<color={LogColor.Key}>GUID</color>: <color={LogColor.Value}>{guid}</color>", Selection.activeObject);
+            PipiToolbox.Log(LogHeader, $"<color={LogColor.Key}>File ID (Local ID, Local Identifier In File)</color>: <color={LogColor.Value}>{localId}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -121,7 +111,7 @@ namespace PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             int instanceID = Selection.activeObject.GetInstanceID();
-            Debug.Log($"[{LogHeader}] <color={LogKeyColor}>Instance ID</color>: <color={LogValueColor}>{instanceID}</color>", Selection.activeObject);
+            PipiToolbox.Log(LogHeader, $"<color={LogColor.Key}>Instance ID</color>: <color={LogColor.Value}>{instanceID}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -134,11 +124,11 @@ namespace PipiToolbox.Editor
             string name = GetAssetBundleName(Selection.activeObject);
             if (string.IsNullOrEmpty(name))
             {
-                Debug.Log($"[{LogHeader}] <color={LogKeyColor}>AssetBundle Name</color>: <color=red><None></color>", Selection.activeObject);
+                PipiToolbox.Log(LogHeader, $"<color={LogColor.Key}>AssetBundle Name</color>: <color=red><None></color>", Selection.activeObject);
             }
             else
             {
-                Debug.Log($"[{LogHeader}] <color={LogKeyColor}>AssetBundle Name</color>: <color={LogValueColor}>{name}</color>", Selection.activeObject);
+                PipiToolbox.Log(LogHeader, $"<color={LogColor.Key}>AssetBundle Name</color>: <color={LogColor.Value}>{name}</color>", Selection.activeObject);
             }
         }
 

@@ -36,16 +36,6 @@ namespace PipiToolbox.Editor
         private const string LogHeader = "SpriteAtlas";
 
         /// <summary>
-        /// Log 键颜色
-        /// </summary>
-        private const string LogKeyColor = "white";
-
-        /// <summary>
-        /// Log 值颜色
-        /// </summary>
-        private const string LogValueColor = "yellow";
-
-        /// <summary>
         /// 存放 SpriteAtlas 资源的路径（基于项目的 Assets 目录）
         /// </summary>
         private const string SpriteAtlasFolderName = "";
@@ -85,7 +75,7 @@ namespace PipiToolbox.Editor
             Sprite[] sprites = GetSpritesInSelection();
             if (sprites.Length == 0)
             {
-                Debug.LogWarning($"[{LogHeader}] There are no sprite assets in the current selection.");
+                PipiToolbox.LogWarning(LogHeader, $"There are no sprite assets in the current selection.");
                 return;
             }
             // 选择已有的图集并添加
@@ -105,7 +95,7 @@ namespace PipiToolbox.Editor
         {
             if (sprites.Length == 0)
             {
-                Debug.LogWarning($"[{LogHeader}] Sprite array is empty, skip adding.");
+                PipiToolbox.LogWarning(LogHeader, $"Sprite array is empty, skip adding.");
                 return;
             }
             // 图集路径
@@ -128,20 +118,20 @@ namespace PipiToolbox.Editor
                 // 是否能够添加
                 if (spriteAtlas.GetSprite(sprite.name))
                 {
-                    Debug.LogWarning($"[{LogHeader}] SpriteAtlas '{spriteAtlas.name}' already has a sprite named '{sprite.name}', skipped!");
+                    PipiToolbox.LogWarning(LogHeader, $"SpriteAtlas '{spriteAtlas.name}' already has a sprite named '{sprite.name}', skipped!");
                     continue;
                 }
                 // 添加到图集
                 spriteAtlas.Add(new Object[] {sprite});
                 addedCount++;
-                Debug.Log($"[{LogHeader}] Added to SpriteAtlas: <color={LogKeyColor}>{spritePath}</color> => <color={LogValueColor}>{spriteAtlasPath}</color>", sprite);
+                PipiToolbox.Log(LogHeader, $"Added to SpriteAtlas: <color={LogColor.Key}>{spritePath}</color> => <color={LogColor.Value}>{spriteAtlasPath}</color>", sprite);
             }
             EditorUtility.ClearProgressBar();
             // 保存
             if (addedCount > 0)
             {
                 AssetDatabase.SaveAssets();
-                Debug.Log($"[{LogHeader}] SpriteAtlas Updated: <color={LogValueColor}>{spriteAtlasPath}</color>", spriteAtlas);
+                PipiToolbox.Log(LogHeader, $"SpriteAtlas Updated: <color={LogColor.Value}>{spriteAtlasPath}</color>", spriteAtlas);
             }
         }
 

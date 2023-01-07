@@ -30,16 +30,6 @@ namespace PipiToolbox.Editor
         private const string LogHeader = "Texture";
 
         /// <summary>
-        /// Log 键颜色
-        /// </summary>
-        private const string LogKeyColor = "white";
-
-        /// <summary>
-        /// Log 值颜色
-        /// </summary>
-        private const string LogValueColor = "yellow";
-
-        /// <summary>
         /// 尺寸调整模式
         /// </summary>
         public enum ResizeMode
@@ -109,10 +99,10 @@ namespace PipiToolbox.Editor
             // 是否需要调整
             if (texture.width == desiredWidth && texture.height == desiredHeight)
             {
-                Debug.LogWarning($"[{LogHeader}] This texture does not need to be resized! asset path: {AssetDatabase.GetAssetPath(texture)}\n\n\n", texture);
+                PipiToolbox.LogWarning(LogHeader, $"This texture does not need to be resized! asset path: {AssetDatabase.GetAssetPath(texture)}", texture);
                 return;
             }
-            Debug.Log($"[{LogHeader}] Resize texture from <color={LogValueColor}>{texture.width}x{texture.height}</color> to <color={LogValueColor}>{desiredWidth}x{desiredHeight}</color>, asset path: {AssetDatabase.GetAssetPath(texture)}\n\n\n", texture);
+            PipiToolbox.Log(LogHeader, $"Resize texture from <color={LogColor.Key}>{texture.width}x{texture.height}</color> to <color={LogColor.Value}>{desiredWidth}x{desiredHeight}</color>, asset path: {AssetDatabase.GetAssetPath(texture)}", texture);
             TextureUtility.Resize(texture, desiredWidth, desiredHeight);
         }
 

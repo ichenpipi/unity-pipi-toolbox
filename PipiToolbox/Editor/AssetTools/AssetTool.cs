@@ -27,16 +27,6 @@ namespace PipiToolbox.Editor
         /// </summary>
         private const string LogHeader = "Asset";
 
-        /// <summary>
-        /// Log 键颜色
-        /// </summary>
-        private const string LogKeyColor = "white";
-
-        /// <summary>
-        /// Log 值颜色
-        /// </summary>
-        private const string LogValueColor = "yellow";
-
         [MenuItem(MenuPath + "Reimport", false, MenuPriority)]
         private static void Menu_Reimport()
         {

@@ -32,16 +32,6 @@ namespace PipiToolbox.Editor
         private const string LogHeader = "Sprite";
 
         /// <summary>
-        /// Log 键颜色
-        /// </summary>
-        private const string LogKeyColor = "white";
-
-        /// <summary>
-        /// Log 值颜色
-        /// </summary>
-        private const string LogValueColor = "yellow";
-
-        /// <summary>
         /// 批量设置 Sprite 资源的 Packing Tag
         /// </summary>
         [MenuItem(MenuPath + "Set Sprite Packing Tag (Multi-asset support)", false, MenuPriority)]
@@ -132,7 +122,7 @@ namespace PipiToolbox.Editor
             }
             assetImporter.spritePackingTag = packingTag;
             assetImporter.SaveAndReimport();
-            Debug.Log($"[{LogHeader}] Set Sprite Packing Tag: <color={LogKeyColor}>{assetPath}</color> => <color={LogValueColor}>{packingTag}</color>", assetImporter);
+            PipiToolbox.Log(LogHeader, $"Set Sprite Packing Tag: <color={LogColor.Key}>{assetPath}</color> => <color={LogColor.Value}>{packingTag}</color>", assetImporter);
         }
 
         /// <summary>
