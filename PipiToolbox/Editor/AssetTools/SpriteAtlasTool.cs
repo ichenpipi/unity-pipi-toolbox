@@ -124,14 +124,14 @@ namespace PipiToolbox.Editor
                 // 添加到图集
                 spriteAtlas.Add(new Object[] {sprite});
                 addedCount++;
-                PipiToolbox.Log(LogHeader, $"Added to SpriteAtlas: <color={LogColor.Key}>{spritePath}</color> => <color={LogColor.Value}>{spriteAtlasPath}</color>", sprite);
+                PipiToolbox.LogSuccess(LogHeader, $"Added to SpriteAtlas: <color={LogColor.Key}>{spritePath}</color> => <color={LogColor.Value}>{spriteAtlasPath}</color>", sprite);
             }
             EditorUtility.ClearProgressBar();
             // 保存
             if (addedCount > 0)
             {
                 AssetDatabase.SaveAssets();
-                PipiToolbox.Log(LogHeader, $"SpriteAtlas Updated: <color={LogColor.Value}>{spriteAtlasPath}</color>", spriteAtlas);
+                PipiToolbox.LogSuccess(LogHeader, $"SpriteAtlas Updated: <color={LogColor.Value}>{spriteAtlasPath}</color>", spriteAtlas);
             }
         }
 

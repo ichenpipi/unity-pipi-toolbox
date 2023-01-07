@@ -171,7 +171,7 @@ namespace PipiToolbox.Editor
             assetBundleName = assetBundleName.ToLower();
             assetImporter.SetAssetBundleNameAndVariant(assetBundleName, assetBundleVariant);
             assetImporter.SaveAndReimport();
-            PipiToolbox.Log(LogHeader, $"Set AssetBundle Name: <color={LogColor.Key}>{assetPath}</color> => <color={LogColor.Value}>{assetBundleName}</color>", assetImporter);
+            PipiToolbox.LogSuccess(LogHeader, $"Set AssetBundle Name: <color={LogColor.Key}>{assetPath}</color> => <color={LogColor.Value}>{assetBundleName}</color>", assetImporter);
         }
 
         /// <summary>

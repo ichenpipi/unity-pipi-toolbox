@@ -81,29 +81,31 @@ namespace PipiToolbox.Editor
         /// </summary>
         private static void ResizeToMultipleOf4(Texture2D texture, ResizeMode resizeMode)
         {
+            // 原尺寸
+            int originalWidth = texture.width, originalHeight = texture.height;
             // 计算期望尺寸
             int desiredWidth, desiredHeight;
             switch (resizeMode)
             {
                 case ResizeMode.Expand:
-                    desiredWidth = Mathf.CeilToInt(texture.width / 4f) * 4;
-                    desiredHeight = Mathf.CeilToInt(texture.height / 4f) * 4;
+                    desiredWidth = Mathf.CeilToInt(originalWidth / 4f) * 4;
+                    desiredHeight = Mathf.CeilToInt(originalHeight / 4f) * 4;
                     break;
                 case ResizeMode.Shrink:
-                    desiredWidth = Mathf.FloorToInt(texture.width / 4f) * 4;
-                    desiredHeight = Mathf.FloorToInt(texture.height / 4f) * 4;
+                    desiredWidth = Mathf.FloorToInt(originalWidth / 4f) * 4;
+                    desiredHeight = Mathf.FloorToInt(originalHeight / 4f) * 4;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(resizeMode), resizeMode, null);
             }
             // 是否需要调整
-            if (texture.width == desiredWidth && texture.height == desiredHeight)
+            if (originalWidth == desiredWidth && originalHeight == desiredHeight)
             {
                 PipiToolbox.LogWarning(LogHeader, $"This texture does not need to be resized! asset path: {AssetDatabase.GetAssetPath(texture)}", texture);
                 return;
             }
-            PipiToolbox.Log(LogHeader, $"Resize texture from <color={LogColor.Key}>{texture.width}x{texture.height}</color> to <color={LogColor.Value}>{desiredWidth}x{desiredHeight}</color>, asset path: {AssetDatabase.GetAssetPath(texture)}", texture);
             TextureUtility.Resize(texture, desiredWidth, desiredHeight);
+            PipiToolbox.LogSuccess(LogHeader, $"Resize texture from <color={LogColor.Key}>{originalWidth}x{originalHeight}</color> to <color={LogColor.Value}>{desiredWidth}x{desiredHeight}</color>, asset path: {AssetDatabase.GetAssetPath(texture)}", texture);
         }
 
     }

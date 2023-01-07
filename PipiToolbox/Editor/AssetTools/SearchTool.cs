@@ -39,13 +39,13 @@ namespace PipiToolbox.Editor
                 {
                     Object asset = AssetDatabase.LoadAssetAtPath<Object>(assetPath);
                     Selection.activeObject = asset;
-                    Debug.Log($"[{LogHeader}] <color=green>Asset found!</color>\n\n\n", asset);
-                    Debug.Log($"[{LogHeader}] GUID: <color=yellow>{input}</color>\n\n\n", asset);
-                    Debug.Log($"[{LogHeader}] Path: <color=yellow>{assetPath}</color>\n\n\n", asset);
+                    PipiToolbox.LogSuccess(LogHeader, $"Asset found!", asset);
+                    PipiToolbox.LogSuccess(LogHeader, $"GUID: <color=yellow>{input}</color>", asset);
+                    PipiToolbox.LogSuccess(LogHeader, $"Path: <color=yellow>{assetPath}</color>", asset);
                 }
                 else
                 {
-                    Debug.LogWarning($"[{LogHeader}] <color=red>There is no asset with GUID: <color=yellow>{input}</color></color>\n\n\n");
+                    PipiToolbox.LogWarning(LogHeader, $"There is no asset with GUID: <color=yellow>{input}</color>");
                 }
             }
             inputDialog.confirmCallback = InputDialogConfirmCallback;
@@ -62,13 +62,13 @@ namespace PipiToolbox.Editor
                 if (asset)
                 {
                     Selection.activeObject = asset;
-                    Debug.Log($"[{LogHeader}] <color=green>Asset found!</color>\n\n\n", asset);
-                    Debug.Log($"[{LogHeader}] Path: <color=yellow>{input}</color>\n\n\n", asset);
-                    Debug.Log($"[{LogHeader}] GUID: <color=yellow>{AssetDatabase.AssetPathToGUID(input)}</color>\n\n\n", asset);
+                    PipiToolbox.LogSuccess(LogHeader, $"Asset found!", asset);
+                    PipiToolbox.LogSuccess(LogHeader, $"Path: <color=yellow>{input}</color>", asset);
+                    PipiToolbox.LogSuccess(LogHeader, $"GUID: <color=yellow>{AssetDatabase.AssetPathToGUID(input)}</color>", asset);
                 }
                 else
                 {
-                    Debug.LogWarning($"[{LogHeader}] <color=red>There is no asset with Path: <color=yellow>{input}</color></color>\n\n\n");
+                    PipiToolbox.LogWarning(LogHeader, $"There is no asset with Path: <color=yellow>{input}</color>");
                 }
             }
             inputDialog.confirmCallback = InputDialogConfirmCallback;

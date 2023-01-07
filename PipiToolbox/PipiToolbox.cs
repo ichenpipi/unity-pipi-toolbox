@@ -8,7 +8,7 @@ namespace PipiToolbox.Editor
     /// 皮皮工具箱
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20220924</version>
+    /// <version>20230107</version>
     public static class PipiToolbox
     {
 
@@ -52,7 +52,20 @@ namespace PipiToolbox.Editor
         /// <param name="context">Object to which the message applies.</param>
         public static void Log(string header, string message, Object context = null)
         {
-            Debug.Log(string.IsNullOrEmpty(header) ? $"<color={LogColor.LogBase}>{message}</color>\n\n\n" : $"<color={LogColor.LogBase}>[{header}] {message}</color>\n\n\n", context);
+            if (!string.IsNullOrEmpty(header)) header = $"[{header}] ";
+            Debug.Log($"<color={LogColor.LogBase}>{header}{message}</color>\n\n\n", context);
+        }
+
+        /// <summary>
+        /// Logs a message to the Unity Console.
+        /// </summary>
+        /// <param name="header"></param>
+        /// <param name="message">String or object to be converted to string representation for display.</param>
+        /// <param name="context">Object to which the message applies.</param>
+        public static void LogSuccess(string header, string message, Object context = null)
+        {
+            if (!string.IsNullOrEmpty(header)) header = $"[{header}] ";
+            Debug.Log($"<color={LogColor.SuccessBase}>{header}{message}</color>\n\n\n", context);
         }
 
         /// <summary>
@@ -63,7 +76,8 @@ namespace PipiToolbox.Editor
         /// <param name="context">Object to which the message applies.</param>
         public static void LogWarning(string header, string message, Object context = null)
         {
-            Debug.LogWarning(string.IsNullOrEmpty(header) ? $"<color={LogColor.WarningBase}>{message}</color>\n\n\n" : $"<color={LogColor.WarningBase}>[{header}] {message}</color>\n\n\n", context);
+            if (!string.IsNullOrEmpty(header)) header = $"[{header}] ";
+            Debug.LogWarning($"<color={LogColor.WarningBase}>{header}{message}</color>\n\n\n", context);
         }
 
     }
@@ -71,21 +85,27 @@ namespace PipiToolbox.Editor
     public static class LogColor
     {
 
-        private static class Color
+        private static class MyColor
         {
-            public const string Blue = "blue";
-            public const string White = "white";
+            public const string White = "#FFFFFF";
+            public const string Orange = "orange";
+            public const string Red = "#FF0000";
+            public const string Green = "#00FF00";
+            public const string Blue = "#0000FF";
             public const string Yellow = "yellow";
-            public const string Red = "red";
+            public const string Cyan = "#00FFFF";
+            public const string Magenta = "#FF00FF";
         }
 
-        public const string LogBase = Color.Blue;
+        public const string LogBase = MyColor.Cyan;
 
-        public const string WarningBase = Color.Blue;
+        public const string WarningBase = MyColor.Orange;
 
-        public const string Key = Color.White;
+        public const string SuccessBase = MyColor.Green;
 
-        public const string Value = Color.Yellow;
+        public const string Key = MyColor.White;
+
+        public const string Value = MyColor.Yellow;
 
     }
 

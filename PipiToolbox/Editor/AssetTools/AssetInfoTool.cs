@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using LZParkInc.Watermelon;
 using UnityEngine;
 using UnityEditor;
 using Object = UnityEngine.Object;
@@ -13,7 +14,7 @@ namespace PipiToolbox.Editor
     /// 资源信息工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221130</version>
+    /// <version>20230107</version>
     public static class AssetInfoTools
     {
 
@@ -159,6 +160,20 @@ namespace PipiToolbox.Editor
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
                 list.Add(path);
+            }
+            SaveToClipboard(Join(list, ", "));
+        }
+
+        /// <summary>
+        /// 复制 GUID 到系统剪切板
+        /// </summary>
+        [MenuItem(MenuPath + "Copy GUID", false, MenuPriority + 11)]
+        private static void CopyGUID()
+        {
+            List<string> list = new List<string>();
+            foreach (string guid in Selection.assetGUIDs)
+            {
+                list.Add(guid);
             }
             SaveToClipboard(Join(list, ", "));
         }

@@ -122,7 +122,7 @@ namespace PipiToolbox.Editor
             }
             assetImporter.spritePackingTag = packingTag;
             assetImporter.SaveAndReimport();
-            PipiToolbox.Log(LogHeader, $"Set Sprite Packing Tag: <color={LogColor.Key}>{assetPath}</color> => <color={LogColor.Value}>{packingTag}</color>", assetImporter);
+            PipiToolbox.LogSuccess(LogHeader, $"Set Sprite Packing Tag: <color={LogColor.Key}>{assetPath}</color> => <color={LogColor.Value}>{packingTag}</color>", assetImporter);
         }
 
         /// <summary>
