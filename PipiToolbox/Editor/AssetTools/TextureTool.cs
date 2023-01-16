@@ -10,7 +10,7 @@ namespace PipiToolbox.Editor
     /// 纹理工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221215</version>
+    /// <version>20230116</version>
     public static class TextureTool
     {
 
@@ -48,7 +48,7 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 调整纹理的尺寸到 4 的倍数
         /// </summary>
-        [MenuItem(MenuPath + "Resize to multiple of 4 (Multi-asset support)/Expand (Ceil)", false, MenuPriority)]
+        [MenuItem(MenuPath + "Resize to Multiple of 4 (Multi-asset support)/Expand (Ceil)", false, MenuPriority)]
         private static void Menu_ResizeToMultipleOf4_Expand()
         {
             Selection_ResizeToMultipleOf4(ResizeMode.Expand);
@@ -57,10 +57,28 @@ namespace PipiToolbox.Editor
         /// <summary>
         /// 调整纹理的尺寸到 4 的倍数
         /// </summary>
-        [MenuItem(MenuPath + "Resize to multiple of 4 (Multi-asset support)/Shrink (Floor)", false, MenuPriority)]
-        private static void Menu_ResizeToMultipleOf4_Clip()
+        [MenuItem(MenuPath + "Resize to Multiple of 4 (Multi-asset support)/Shrink (Floor)", false, MenuPriority)]
+        private static void Menu_ResizeToMultipleOf4_Shrink()
         {
             Selection_ResizeToMultipleOf4(ResizeMode.Shrink);
+        }
+
+        /// <summary>
+        /// 调整纹理的尺寸到 2 次幂
+        /// </summary>
+        [MenuItem(MenuPath + "Resize to Power of 2 (POT) (Multi-asset support)/Expand (Ceil)", false, MenuPriority)]
+        private static void Menu_ResizeToPowerOf2_Expand()
+        {
+            Selection_ResizeToPowerOf2(ResizeMode.Expand);
+        }
+
+        /// <summary>
+        /// 调整纹理的尺寸到 2 次幂
+        /// </summary>
+        [MenuItem(MenuPath + "Resize to Power of 2 (POT) (Multi-asset support)/Shrink (Floor)", false, MenuPriority)]
+        private static void Menu_ResizeToPowerOf2_Shrink()
+        {
+            Selection_ResizeToPowerOf2(ResizeMode.Shrink);
         }
 
         /// <summary>
@@ -77,8 +95,24 @@ namespace PipiToolbox.Editor
         }
 
         /// <summary>
+        /// 调整纹理的尺寸到 2 次幂
+        /// </summary>
+        private static void Selection_ResizeToPowerOf2(ResizeMode resizeMode)
+        {
+            Object[] assets = Selection.GetFiltered(typeof(Texture2D), SelectionMode.DeepAssets);
+            foreach (Object asset in assets)
+            {
+                if (!(asset is Texture2D texture)) continue;
+                ResizeToPowerOf2(texture, resizeMode);
+            }
+        }
+
+        /// <summary>
         /// 调整纹理的尺寸到 4 的倍数
         /// </summary>
+        /// <param name="texture">纹理</param>
+        /// <param name="resizeMode">调整模式</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         private static void ResizeToMultipleOf4(Texture2D texture, ResizeMode resizeMode)
         {
             // 原尺寸
@@ -98,14 +132,54 @@ namespace PipiToolbox.Editor
                 default:
                     throw new ArgumentOutOfRangeException(nameof(resizeMode), resizeMode, null);
             }
-            // 是否需要调整
-            if (originalWidth == desiredWidth && originalHeight == desiredHeight)
+            // 调整
+            Resize(texture, desiredWidth, desiredHeight);
+        }
+
+        /// <summary>
+        /// 调整纹理的尺寸到 2 次幂
+        /// <param name="texture">纹理</param>
+        /// <param name="resizeMode">调整模式</param>
+        /// </summary>
+        private static void ResizeToPowerOf2(Texture2D texture, ResizeMode resizeMode)
+        {
+            // 原尺寸
+            int originalWidth = texture.width, originalHeight = texture.height;
+            // 计算期望尺寸
+            int desiredWidth, desiredHeight;
+            switch (resizeMode)
             {
-                PipiToolbox.LogWarning(LogHeader, $"This texture does not need to be resized! asset path: {AssetDatabase.GetAssetPath(texture)}", texture);
+                case ResizeMode.Expand:
+                    desiredWidth = (int) Mathf.Pow(2, Mathf.Ceil(Mathf.Log(originalWidth) / Mathf.Log(2)));
+                    desiredHeight = (int) Mathf.Pow(2, Mathf.Ceil(Mathf.Log(originalHeight) / Mathf.Log(2)));
+                    break;
+                case ResizeMode.Shrink:
+                    desiredWidth = (int) Mathf.Pow(2, Mathf.Floor(Mathf.Log(originalWidth) / Mathf.Log(2)));
+                    desiredHeight = (int) Mathf.Pow(2, Mathf.Floor(Mathf.Log(originalHeight) / Mathf.Log(2)));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(resizeMode), resizeMode, null);
+            }
+            // 调整
+            Resize(texture, desiredWidth, desiredHeight);
+        }
+
+        /// <summary>
+        /// 调整纹理尺寸
+        /// </summary>
+        /// <param name="texture">纹理</param>
+        /// <param name="width">宽</param>
+        /// <param name="height">高</param>
+        private static void Resize(Texture2D texture, int width, int height)
+        {
+            int originalWidth = texture.width, originalHeight = texture.height;
+            if (originalWidth == width && originalHeight == height)
+            {
+                PipiToolbox.LogWarning(LogHeader, $"This texture does not need to be resized! Asset path: <color={LogColor.Value}>{AssetDatabase.GetAssetPath(texture)}</color>", texture);
                 return;
             }
-            TextureUtility.Resize(texture, desiredWidth, desiredHeight);
-            PipiToolbox.LogSuccess(LogHeader, $"Resize texture from <color={LogColor.Key}>{originalWidth}x{originalHeight}</color> to <color={LogColor.Value}>{desiredWidth}x{desiredHeight}</color>, asset path: {AssetDatabase.GetAssetPath(texture)}", texture);
+            TextureUtility.Resize(texture, width, height);
+            PipiToolbox.LogSuccess(LogHeader, $"Resized texture from <color={LogColor.Key}>{originalWidth}x{originalHeight}</color> to <color={LogColor.Value}>{width}x{height}</color>! Asset path: <color={LogColor.Value}>{AssetDatabase.GetAssetPath(texture)}</color>", texture);
         }
 
     }
