@@ -65,6 +65,21 @@ namespace PipiToolbox.Editor
             RenderTexture.active = temp;
             // 从当前激活的 RenderTexture 中读取像素数据并应用
             dest.ReadPixels(new Rect(0, 0, temp.width, temp.height), 0, 0);
+            // 在右侧填充像素
+            if (dest.width > source.width)
+            {
+                int fillWidth = dest.width - source.width;
+                Color[] colors = new Color[fillWidth * dest.height];
+                dest.SetPixels(source.width, 0, fillWidth, dest.height, colors);
+            }
+            // 在上方填充像素
+            if (dest.height > source.height)
+            {
+                int fillHeight = dest.height - source.height;
+                Color[] colors = new Color[dest.width * fillHeight];
+                dest.SetPixels(0, source.height, dest.width, fillHeight, colors);
+            }
+            // 应用变更
             dest.Apply();
             // 恢复当前激活的 RenderTexture 的引用
             RenderTexture.active = previous;
