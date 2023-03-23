@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEditor;
 using Object = UnityEngine.Object;
 
-namespace PipiToolbox.Editor
+namespace ChenPipi.PipiToolbox
 {
 
     /// <summary>

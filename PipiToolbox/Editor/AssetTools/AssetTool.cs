@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace PipiToolbox.Editor
+namespace ChenPipi.PipiToolbox
 {
 
     /// <summary>

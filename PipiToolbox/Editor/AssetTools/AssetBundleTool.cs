@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-namespace PipiToolbox.Editor
+namespace ChenPipi.PipiToolbox
 {
 
     /// <summary>
@@ -132,7 +132,7 @@ namespace PipiToolbox.Editor
         public static async Task SetAssetBundleName(string assetPath, string assetBundleName)
         {
             // 获取资源路径
-            string[] paths = AssetDatabase.IsValidFolder(assetPath) ? GetAssetsAtPath(assetPath) : new[] { assetPath };
+            string[] paths = AssetDatabase.IsValidFolder(assetPath) ? GetAssetsAtPath(assetPath) : new[] {assetPath};
             // 遍历处理
             int totalCount = paths.Length;
             for (int i = 0; i < totalCount; i++)
@@ -140,7 +140,7 @@ namespace PipiToolbox.Editor
                 string path = paths[i];
                 // 展示进度
                 string title = $"Setting AssetBundle Name... ({i + 1}/{totalCount})";
-                float progress = (float)(i + 1) / totalCount;
+                float progress = (float) (i + 1) / totalCount;
                 bool hasCanceled = EditorUtility.DisplayCancelableProgressBar(title, path, progress);
                 // 延迟
                 await Task.Delay(1);

@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
-namespace PipiToolbox.Editor
+namespace ChenPipi.PipiToolbox
 {
 
     /// <summary>
