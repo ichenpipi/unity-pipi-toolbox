@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.U2D;
@@ -23,27 +21,27 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.AssetsMenuBasePath + "SpriteAtlas Tool/";
+        private const string k_MenuPath = PipiToolboxMenu.AssetsMenuBasePath + "SpriteAtlas Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.AssetsMenuBasePriority + 120;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 120;
 
         /// <summary>
         /// Log 头部信息
         /// </summary>
-        private const string LogHeader = "SpriteAtlas";
+        private const string k_LogTag = "SpriteAtlas";
 
         /// <summary>
         /// 存放 SpriteAtlas 资源的路径（基于项目的 Assets 目录）
         /// </summary>
-        private const string SpriteAtlasFolderName = "";
+        private const string k_SpriteAtlasFolderName = "";
 
         /// <summary>
         /// 存放 SpriteAtlas 资源的路径（绝对路径）
         /// </summary>
-        private static readonly string SpriteAtlasFolderPath = Path.Combine(Application.dataPath, SpriteAtlasFolderName);
+        private static readonly string s_SpriteAtlasFolderPath = Path.Combine(Application.dataPath, k_SpriteAtlasFolderName);
 
         // /// <summary>
         // /// 
@@ -68,14 +66,14 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 添加当前选中的 Sprite 资源到已有的 SpriteAtlas
         /// </summary>
-        [MenuItem(MenuPath + "Add Selection To Existing SpriteAtlas", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Add Selection To Existing SpriteAtlas", false, k_MenuPriority)]
         private static void Menu_AddSelectionToExistingSpriteAtlas()
         {
             // 获取选中的 Sprite
             Sprite[] sprites = GetSpritesInSelection();
             if (sprites.Length == 0)
             {
-                PipiToolbox.LogWarning(LogHeader, $"There are no sprite assets in the current selection.");
+                PipiToolboxUtility.LogWarning(k_LogTag, $"There are no sprite assets in the current selection.");
                 return;
             }
             // 选择已有的图集并添加
@@ -95,7 +93,7 @@ namespace ChenPipi.PipiToolbox
         {
             if (sprites.Length == 0)
             {
-                PipiToolbox.LogWarning(LogHeader, $"Sprite array is empty, skip adding.");
+                PipiToolboxUtility.LogWarning(k_LogTag, $"Sprite array is empty, skip adding.");
                 return;
             }
             // 图集路径
@@ -118,20 +116,20 @@ namespace ChenPipi.PipiToolbox
                 // 是否能够添加
                 if (spriteAtlas.GetSprite(sprite.name))
                 {
-                    PipiToolbox.LogWarning(LogHeader, $"SpriteAtlas '{spriteAtlas.name}' already has a sprite named '{sprite.name}', skipped!");
+                    PipiToolboxUtility.LogWarning(k_LogTag, $"SpriteAtlas '{spriteAtlas.name}' already has a sprite named '{sprite.name}', skipped!");
                     continue;
                 }
                 // 添加到图集
                 spriteAtlas.Add(new Object[] {sprite});
                 addedCount++;
-                PipiToolbox.LogSuccess(LogHeader, $"Added to SpriteAtlas: <color={LogColor.Key}>{spritePath}</color> => <color={LogColor.Value}>{spriteAtlasPath}</color>", sprite);
+                PipiToolboxUtility.LogSuccess(k_LogTag, $"Added to SpriteAtlas: <color={LogColor.White}>{spritePath}</color> => <color={LogColor.Yellow}>{spriteAtlasPath}</color>", sprite);
             }
             EditorUtility.ClearProgressBar();
             // 保存
             if (addedCount > 0)
             {
                 AssetDatabase.SaveAssets();
-                PipiToolbox.LogSuccess(LogHeader, $"SpriteAtlas Updated: <color={LogColor.Value}>{spriteAtlasPath}</color>", spriteAtlas);
+                PipiToolboxUtility.LogSuccess(k_LogTag, $"SpriteAtlas Updated: <color={LogColor.Yellow}>{spriteAtlasPath}</color>", spriteAtlas);
             }
         }
 
@@ -203,7 +201,7 @@ namespace ChenPipi.PipiToolbox
         {
             const string title = "Select an existing SpriteAtlas";
             const string extension = "spriteatlas";
-            string directory = SpriteAtlasFolderPath;
+            string directory = s_SpriteAtlasFolderPath;
             string path = EditorUtility.OpenFilePanel(title, directory, extension);
             return string.IsNullOrEmpty(path) ? null : AssetDatabase.LoadAssetAtPath<SpriteAtlas>(GetAssetRelativePath(path));
         }

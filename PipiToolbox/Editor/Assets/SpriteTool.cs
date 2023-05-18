@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
-using UnityEngine;
 
 namespace ChenPipi.PipiToolbox
 {
@@ -19,22 +16,22 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.AssetsMenuBasePath + "Sprite Tool/";
+        private const string k_MenuPath = PipiToolboxMenu.AssetsMenuBasePath + "Sprite Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.AssetsMenuBasePriority + 130;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 130;
 
         /// <summary>
         /// Log 头部信息
         /// </summary>
-        private const string LogHeader = "Sprite";
+        private const string k_LogTag = "Sprite";
 
         /// <summary>
         /// 批量设置 Sprite 资源的 Packing Tag
         /// </summary>
-        [MenuItem(MenuPath + "Set Sprite Packing Tag (Multi-asset support)", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Set Sprite Packing Tag (Multi-asset support)", false, k_MenuPriority)]
         private static void Menu_BatchSettingSpritePackingTag()
         {
             InputDialogWindow inputDialog = InputDialogWindow.Create("New Packing Tag");
@@ -45,7 +42,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 移除 Sprite 资源的 Packing Tag
         /// </summary>
-        [MenuItem(MenuPath + "Remove Sprite Packing Tag (Multi-asset support)", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Remove Sprite Packing Tag (Multi-asset support)", false, k_MenuPriority)]
         private static void Menu_RemoveSpritePackingTag()
         {
             SetSpritePackingTagByGUIDs(Selection.assetGUIDs, "");
@@ -85,7 +82,7 @@ namespace ChenPipi.PipiToolbox
         public static async Task SetSpritePackingTag(string assetPath, string packingTag)
         {
             // 获取资源路径
-            string[] paths = AssetDatabase.IsValidFolder(assetPath) ? GetAssetsAtPath(assetPath) : new[] { assetPath };
+            string[] paths = AssetDatabase.IsValidFolder(assetPath) ? AssetUtility.GetAssetsAtPath(assetPath) : new[] { assetPath };
             // 遍历处理
             int totalCount = paths.Length;
             for (int i = 0; i < totalCount; i++)
@@ -122,17 +119,7 @@ namespace ChenPipi.PipiToolbox
             }
             assetImporter.spritePackingTag = packingTag;
             assetImporter.SaveAndReimport();
-            PipiToolbox.LogSuccess(LogHeader, $"Set Sprite Packing Tag: <color={LogColor.Key}>{assetPath}</color> => <color={LogColor.Value}>{packingTag}</color>", assetImporter);
-        }
-
-        /// <summary>
-        /// 获取指定目录下的所有资源的路径
-        /// </summary>
-        private static string[] GetAssetsAtPath(string path)
-        {
-            return Directory.GetFiles(path, "*", SearchOption.AllDirectories)
-                .Where(p => !p.EndsWith(".meta"))
-                .ToArray();
+            PipiToolboxUtility.LogSuccess(k_LogTag, $"Set Sprite Packing Tag: <color={LogColor.White}>{assetPath}</color> => <color={LogColor.Yellow}>{packingTag}</color>", assetImporter);
         }
 
     }

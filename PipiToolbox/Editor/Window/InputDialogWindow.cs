@@ -85,17 +85,17 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 确认回调函数
         /// </summary>
-        public Action<string> confirmCallback;
+        public Action<string> confirmCallback = null;
 
         /// <summary>
         /// 取消回调函数
         /// </summary>
-        public Action cancelCallback;
+        public Action cancelCallback = null;
 
         /// <summary>
         /// 窗口关闭回调函数
         /// </summary>
-        public Action<bool, bool> closeCallback;
+        public Action<bool, bool> closeCallback = null;
 
         /// <summary>
         /// 设置窗口标题文本
@@ -166,7 +166,8 @@ namespace ChenPipi.PipiToolbox
                 // 输入框
                 inputContent = EditorGUILayout.TextArea(inputContent, GUILayout.MinWidth(0), GUILayout.ExpandHeight(true));
                 // 占位符
-                if (string.IsNullOrEmpty(inputContent)) {
+                if (string.IsNullOrEmpty(inputContent))
+                {
                     Rect pos = new Rect(GUILayoutUtility.GetLastRect());
                     GUIStyle style = new GUIStyle
                     {

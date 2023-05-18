@@ -15,17 +15,17 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.GameObjectMenuBasePath + "RectTransform Tool/";
+        private const string k_MenuPath = PipiToolboxMenu.GameObjectMenuBasePath + "RectTransform Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.GameObjectMenuBasePriority + 201;
+        private const int k_MenuPriority = PipiToolboxMenu.GameObjectMenuBasePriority + 201;
 
         /// <summary>
         /// 上移（Ctrl + ↑）
         /// </summary>
-        [MenuItem(MenuPath + "Move Up (1 pixel) %UP", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Move Up (1 pixel) %UP", false, k_MenuPriority)]
         private static void Menu_MoveUp()
         {
             Move(Selection.transforms, Vector2.up);
@@ -34,7 +34,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 下移（Ctrl + ↓）
         /// </summary>
-        [MenuItem(MenuPath + "Move Down (1 pixel) %DOWN", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Move Down (1 pixel) %DOWN", false, k_MenuPriority)]
         private static void Menu_MoveDown()
         {
             Move(Selection.transforms, Vector2.down);
@@ -43,7 +43,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 左移（Ctrl + ←）
         /// </summary>
-        [MenuItem(MenuPath + "Move Left (1 pixel) %LEFT", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Move Left (1 pixel) %LEFT", false, k_MenuPriority)]
         private static void Menu_MoveLeft()
         {
             Move(Selection.transforms, Vector2.left);
@@ -52,7 +52,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 右移（Ctrl + →）
         /// </summary>
-        [MenuItem(MenuPath + "Move Right (1 pixel) %RIGHT", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Move Right (1 pixel) %RIGHT", false, k_MenuPriority)]
         private static void Menu_MoveRight()
         {
             Move(Selection.transforms, Vector2.right);
@@ -61,7 +61,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 顺时针选择（Ctrl + Shift + ←）
         /// </summary>
-        [MenuItem(MenuPath + "Rotate Clockwise (1 degree) %#RIGHT", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Rotate Clockwise (1 degree) %#RIGHT", false, k_MenuPriority)]
         private static void Menu_RotateClockwise()
         {
             Rotate(Selection.transforms, -1f);
@@ -70,7 +70,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 逆时针旋转（Ctrl + Shift + →）
         /// </summary>
-        [MenuItem(MenuPath + "Rotate Anti-clockwise (1 degree) %#LEFT", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Rotate Anti-clockwise (1 degree) %#LEFT", false, k_MenuPriority)]
         private static void Menu_RotateAnticlockwise()
         {
             Rotate(Selection.transforms, 1f);

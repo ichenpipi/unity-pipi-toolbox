@@ -15,17 +15,17 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.GameObjectMenuBasePath + "GameObject Tool/";
+        private const string k_MenuPath = PipiToolboxMenu.GameObjectMenuBasePath + "GameObject Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.GameObjectMenuBasePriority + 101;
+        private const int k_MenuPriority = PipiToolboxMenu.GameObjectMenuBasePriority + 101;
 
         /// <summary>
         /// 递归设置 GameObject 的 Layer
         /// </summary>
-        [MenuItem(MenuPath + "Set Layer Recursively", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Set Layer Recursively", false, k_MenuPriority)]
         private static void Menu_SetLayerRecursively()
         {
             if (!Selection.activeGameObject) return;
@@ -35,23 +35,10 @@ namespace ChenPipi.PipiToolbox
             {
                 if (int.TryParse(input, out int layer))
                 {
-                    SetLayerRecursively(gameObject, layer);
+                    GameObjectUtility.SetLayerRecursively(gameObject, layer);
                 }
             };
             inputDialog.confirmCallback = InputDialogConfirmCallback;
-        }
-
-        /// <summary>
-        /// 递归设置 GameObject 的 Layer
-        /// </summary>
-        /// <param name="root"></param>
-        /// <param name="layer"></param>
-        private static void SetLayerRecursively(GameObject root, int layer) {
-            root.layer = layer;
-            foreach (Transform child in root.transform)
-            {
-                SetLayerRecursively(child.gameObject, layer);
-            }
         }
 
     }

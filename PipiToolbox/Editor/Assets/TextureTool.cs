@@ -17,17 +17,17 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.AssetsMenuBasePath + "Texture Tool/";
+        private const string k_MenuPath = PipiToolboxMenu.AssetsMenuBasePath + "Texture Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.AssetsMenuBasePriority + 140;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 140;
 
         /// <summary>
         /// Log 头部信息
         /// </summary>
-        private const string LogHeader = "Texture";
+        private const string k_LogTag = "Texture";
 
         /// <summary>
         /// 尺寸调整模式
@@ -48,7 +48,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 调整纹理的尺寸到 4 的倍数
         /// </summary>
-        [MenuItem(MenuPath + "Resize to Multiple of 4 (Multi-asset support)/Expand (Ceil)", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Resize to Multiple of 4 (Multi-asset support)/Expand (Ceil)", false, k_MenuPriority)]
         private static void Menu_ResizeToMultipleOf4_Expand()
         {
             Selection_ResizeToMultipleOf4(ResizeMode.Expand);
@@ -57,7 +57,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 调整纹理的尺寸到 4 的倍数
         /// </summary>
-        [MenuItem(MenuPath + "Resize to Multiple of 4 (Multi-asset support)/Shrink (Floor)", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Resize to Multiple of 4 (Multi-asset support)/Shrink (Floor)", false, k_MenuPriority)]
         private static void Menu_ResizeToMultipleOf4_Shrink()
         {
             Selection_ResizeToMultipleOf4(ResizeMode.Shrink);
@@ -66,7 +66,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 调整纹理的尺寸到 2 次幂
         /// </summary>
-        [MenuItem(MenuPath + "Resize to Power of 2 (POT) (Multi-asset support)/Expand (Ceil)", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Resize to Power of 2 (POT) (Multi-asset support)/Expand (Ceil)", false, k_MenuPriority)]
         private static void Menu_ResizeToPowerOf2_Expand()
         {
             Selection_ResizeToPowerOf2(ResizeMode.Expand);
@@ -75,7 +75,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 调整纹理的尺寸到 2 次幂
         /// </summary>
-        [MenuItem(MenuPath + "Resize to Power of 2 (POT) (Multi-asset support)/Shrink (Floor)", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Resize to Power of 2 (POT) (Multi-asset support)/Shrink (Floor)", false, k_MenuPriority)]
         private static void Menu_ResizeToPowerOf2_Shrink()
         {
             Selection_ResizeToPowerOf2(ResizeMode.Shrink);
@@ -175,11 +175,11 @@ namespace ChenPipi.PipiToolbox
             int originalWidth = texture.width, originalHeight = texture.height;
             if (originalWidth == width && originalHeight == height)
             {
-                PipiToolbox.LogWarning(LogHeader, $"This texture does not need to be resized! Asset path: <color={LogColor.Value}>{AssetDatabase.GetAssetPath(texture)}</color>", texture);
+                PipiToolboxUtility.LogWarning(k_LogTag, $"This texture does not need to be resized! Asset path: <color={LogColor.Yellow}>{AssetDatabase.GetAssetPath(texture)}</color>", texture);
                 return;
             }
             TextureUtility.Resize(texture, width, height);
-            PipiToolbox.LogSuccess(LogHeader, $"Resized texture from <color={LogColor.Key}>{originalWidth}x{originalHeight}</color> to <color={LogColor.Value}>{width}x{height}</color>! Asset path: <color={LogColor.Value}>{AssetDatabase.GetAssetPath(texture)}</color>", texture);
+            PipiToolboxUtility.LogSuccess(k_LogTag, $"Resized texture from <color={LogColor.White}>{originalWidth}x{originalHeight}</color> to <color={LogColor.Yellow}>{width}x{height}</color>! Asset path: <color={LogColor.Yellow}>{AssetDatabase.GetAssetPath(texture)}</color>", texture);
         }
 
     }

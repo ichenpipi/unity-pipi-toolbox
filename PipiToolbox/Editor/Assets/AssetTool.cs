@@ -1,5 +1,4 @@
 using UnityEditor;
-using UnityEngine;
 
 namespace ChenPipi.PipiToolbox
 {
@@ -15,19 +14,19 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.AssetsMenuBasePath + "Asset Tool/";
+        private const string k_MenuPath = PipiToolboxMenu.AssetsMenuBasePath + "Asset Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.AssetsMenuBasePriority + 100;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 100;
 
         /// <summary>
         /// Log 头部信息
         /// </summary>
-        private const string LogHeader = "Asset";
+        private const string k_LogTag = "Asset";
 
-        [MenuItem(MenuPath + "Reimport", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Reimport", false, k_MenuPriority)]
         private static void Menu_Reimport()
         {
             AssetUtility.ReimportAsset(Selection.activeObject);

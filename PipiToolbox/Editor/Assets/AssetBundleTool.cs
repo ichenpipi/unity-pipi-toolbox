@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
-using UnityEngine;
 
 namespace ChenPipi.PipiToolbox
 {
@@ -20,26 +18,43 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string MenuPath = PipiToolbox.AssetsMenuBasePath + "AssetBundle Tool/";
+        private const string k_MenuPath = PipiToolboxMenu.AssetsMenuBasePath + "AssetBundle Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int MenuPriority = PipiToolbox.AssetsMenuBasePriority + 110;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 110;
+
+        /// <summary>
+        /// 菜单项优先级
+        /// </summary>
+        private const int k_MenuPriority2 = k_MenuPriority + 10;
 
         /// <summary>
         /// Log 头部信息
         /// </summary>
-        private const string LogHeader = "AssetBundle";
+        private const string k_LogTag = "AssetBundle";
+
+        /// <summary>
+        /// 设置资源的 AssetBundle 名称
+        /// </summary>
+        [MenuItem(k_MenuPath + "Set AssetBundle Name", false, k_MenuPriority)]
+        private static void Menu_SetAssetBundleName()
+        {
+            string[] assetGUIDs = (string[])Selection.assetGUIDs.Clone();
+            InputDialogWindow inputDialog = InputDialogWindow.Create("New AssetBundle Name");
+            inputDialog.inputContent = AssetDatabase.GetImplicitAssetBundleName(AssetDatabase.GUIDToAssetPath(assetGUIDs[0]));
+            inputDialog.confirmCallback = (s) => SetAssetBundleNameByGUIDs(assetGUIDs, s);
+        }
 
         /// <summary>
         /// 根据资源的路径设置资源的 AssetBundle 名称
         /// </summary>
-        [MenuItem(MenuPath + "Set AssetBundle Name Based On Path", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Set AssetBundle Name Based On Path", false, k_MenuPriority2)]
         private static async void Menu_SetAssetBundleNameBasedOnPath()
         {
-            string[] guids = Selection.assetGUIDs;
-            foreach (string guid in guids)
+            string[] assetGUIDs = (string[])Selection.assetGUIDs.Clone();
+            foreach (string guid in assetGUIDs)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
                 string assetBundleName = assetPath.Substring("Assets/".Length);
@@ -54,11 +69,11 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 根据资源的路径设置资源的 AssetBundle 名称
         /// </summary>
-        [MenuItem(MenuPath + "Set AssetBundle Name Based On Path (With Extension)", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Set AssetBundle Name Based On Path (With Extension)", false, k_MenuPriority2)]
         private static async void Menu_SetAssetBundleNameBasedOnPath2()
         {
-            string[] guids = Selection.assetGUIDs;
-            foreach (string guid in guids)
+            string[] assetGUIDs = (string[])Selection.assetGUIDs.Clone();
+            foreach (string guid in assetGUIDs)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
                 string assetBundleName = assetPath.Substring("Assets/".Length);
@@ -69,11 +84,11 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 根据资源所在的目录设置资源的 AssetBundle 名称
         /// </summary>
-        [MenuItem(MenuPath + "Set AssetBundle Name Based On Directory", false, MenuPriority)]
+        [MenuItem(k_MenuPath + "Set AssetBundle Name Based On Directory", false, k_MenuPriority2)]
         private static async void Menu_SetAssetBundleNameBasedOnDirectory()
         {
-            string[] guids = Selection.assetGUIDs;
-            foreach (string guid in guids)
+            string[] assetGUIDs = (string[])Selection.assetGUIDs.Clone();
+            foreach (string guid in assetGUIDs)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
                 string directory = Path.GetDirectoryName(assetPath);
@@ -88,22 +103,11 @@ namespace ChenPipi.PipiToolbox
         }
 
         /// <summary>
-        /// 批量设置多个资源的 AssetBundle 名称
-        /// </summary>
-        [MenuItem(MenuPath + "Set AssetBundle Name (Multi-asset support)", false, MenuPriority)]
-        private static void Menu_BatchSettingAssetBundleName()
-        {
-            InputDialogWindow inputDialog = InputDialogWindow.Create("New AssetBundle Name");
-            async void InputDialogConfirmCallback(string s) => await SetAssetBundleNameByGUIDs(Selection.assetGUIDs, s);
-            inputDialog.confirmCallback = InputDialogConfirmCallback;
-        }
-
-        /// <summary>
         /// 设置资源的 AssetBundle 名称
         /// </summary>
         /// <param name="guids">GUID</param>
         /// <param name="assetBundleName">AssetBundle 名称</param>
-        public static async Task SetAssetBundleNameByGUIDs(IEnumerable<string> guids, string assetBundleName)
+        private static async Task SetAssetBundleNameByGUIDs(IEnumerable<string> guids, string assetBundleName)
         {
             foreach (string guid in guids)
             {
@@ -116,7 +120,7 @@ namespace ChenPipi.PipiToolbox
         /// </summary>
         /// <param name="assetPaths">资源路径</param>
         /// <param name="assetBundleName">新的 AssetBundle 名称</param>
-        public static async Task SetAssetBundleName(IEnumerable<string> assetPaths, string assetBundleName)
+        private static async Task SetAssetBundleName(IEnumerable<string> assetPaths, string assetBundleName)
         {
             foreach (string path in assetPaths)
             {
@@ -129,10 +133,12 @@ namespace ChenPipi.PipiToolbox
         /// </summary>
         /// <param name="assetPath">资源路径</param>
         /// <param name="assetBundleName">AssetBundle 名称</param>
-        public static async Task SetAssetBundleName(string assetPath, string assetBundleName)
+        private static async Task SetAssetBundleName(string assetPath, string assetBundleName)
         {
             // 获取资源路径
-            string[] paths = AssetDatabase.IsValidFolder(assetPath) ? GetAssetsAtPath(assetPath) : new[] {assetPath};
+            string[] paths = AssetDatabase.IsValidFolder(assetPath) ? AssetUtility.GetAssetsAtPath(assetPath) : new[] { assetPath };
+            // 全小写
+            assetBundleName = assetBundleName.ToLower();
             // 遍历处理
             int totalCount = paths.Length;
             for (int i = 0; i < totalCount; i++)
@@ -140,48 +146,24 @@ namespace ChenPipi.PipiToolbox
                 string path = paths[i];
                 // 展示进度
                 string title = $"Setting AssetBundle Name... ({i + 1}/{totalCount})";
-                float progress = (float) (i + 1) / totalCount;
+                float progress = (float)(i + 1) / totalCount;
                 bool hasCanceled = EditorUtility.DisplayCancelableProgressBar(title, path, progress);
                 // 延迟
-                await Task.Delay(1);
+                await Task.Delay(0);
                 // 是否取消了
                 if (hasCanceled)
                 {
                     break;
                 }
                 // 执行操作
-                SetAssetBundleNameAndVariant(path, assetBundleName, null);
+                AssetUtility.SetAssetBundleNameAndVariant(path, assetBundleName, null);
+                PipiToolboxUtility.LogSuccess(
+                    k_LogTag,
+                    $"Set AssetBundle Name: <color={LogColor.White}>{assetPath}</color> => <color={LogColor.Yellow}>{assetBundleName}</color>",
+                    AssetImporter.GetAtPath(assetPath)
+                );
             }
             EditorUtility.ClearProgressBar();
-        }
-
-        /// <summary>
-        /// Set the AssetBundle name and variant.
-        /// </summary>
-        /// <param name="assetPath">资源路径</param>
-        /// <param name="assetBundleName">AssetBundle 名称</param>
-        /// <param name="assetBundleVariant">AssetBundle 变体</param>
-        private static void SetAssetBundleNameAndVariant(string assetPath, string assetBundleName, string assetBundleVariant)
-        {
-            AssetImporter assetImporter = AssetImporter.GetAtPath(assetPath);
-            if (assetImporter == null)
-            {
-                return;
-            }
-            assetBundleName = assetBundleName.ToLower();
-            assetImporter.SetAssetBundleNameAndVariant(assetBundleName, assetBundleVariant);
-            assetImporter.SaveAndReimport();
-            PipiToolbox.LogSuccess(LogHeader, $"Set AssetBundle Name: <color={LogColor.Key}>{assetPath}</color> => <color={LogColor.Value}>{assetBundleName}</color>", assetImporter);
-        }
-
-        /// <summary>
-        /// 获取指定目录下的所有资源的路径
-        /// </summary>
-        private static string[] GetAssetsAtPath(string path)
-        {
-            return Directory.GetFiles(path, "*", SearchOption.AllDirectories)
-                .Where(p => !p.EndsWith(".meta"))
-                .ToArray();
         }
 
     }

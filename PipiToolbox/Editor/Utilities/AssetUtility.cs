@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -12,9 +13,27 @@ namespace ChenPipi.PipiToolbox
     /// 资源工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221017</version>
+    /// <version>20230518</version>
     public static class AssetUtility
     {
+
+        /// <summary>
+        /// Set the AssetBundle name and variant.
+        /// </summary>
+        /// <param name="assetPath">资源路径</param>
+        /// <param name="assetBundleName">AssetBundle 名称</param>
+        /// <param name="assetBundleVariant">AssetBundle 变体</param>
+        public static void SetAssetBundleNameAndVariant(string assetPath, string assetBundleName, string assetBundleVariant)
+        {
+            AssetImporter assetImporter = AssetImporter.GetAtPath(assetPath);
+            if (assetImporter == null)
+            {
+                return;
+            }
+            assetBundleName = assetBundleName.ToLower();
+            assetImporter.SetAssetBundleNameAndVariant(assetBundleName, assetBundleVariant);
+            assetImporter.SaveAndReimport();
+        }
 
         /// <summary>
         /// 应用资源变更
@@ -65,25 +84,35 @@ namespace ChenPipi.PipiToolbox
         }
 
         /// <summary>
+        /// 获取指定目录下的所有资源的路径
+        /// </summary>
+        public static string[] GetAssetsAtPath(string path)
+        {
+            return Directory.GetFiles(path, "*", SearchOption.AllDirectories)
+                .Where(p => !p.EndsWith(".meta"))
+                .ToArray();
+        }
+
+        /// <summary>
         /// 绝对路径转相对路径（基于项目 Assets 目录）
         /// </summary>
         /// <param name="absolutePath">绝对路径</param>
         /// <returns></returns>
-        private static string ToRelativePath(string absolutePath)
+        public static string ToRelativePath(string absolutePath)
         {
             return ("Assets" + absolutePath.Substring(Application.dataPath.Length)).Replace("\\", "/");
         }
+
+        public static readonly string ProjectPath = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf("Assets", StringComparison.Ordinal));
 
         /// <summary>
         /// 相对路径转绝对路径
         /// </summary>
         /// <param name="relativePath">相对路径</param>
         /// <returns></returns>
-        private static string ToAbsolutePath(string relativePath)
+        public static string ToAbsolutePath(string relativePath)
         {
-            string projectPath = Application.dataPath;
-            projectPath = projectPath.Substring(0, projectPath.LastIndexOf("Assets", StringComparison.Ordinal));
-            return Path.Combine(projectPath, relativePath).Replace("\\", "/");
+            return Path.Combine(ProjectPath, relativePath).Replace("\\", "/");
         }
 
     }
