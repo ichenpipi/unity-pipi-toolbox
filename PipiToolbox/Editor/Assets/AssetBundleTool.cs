@@ -41,7 +41,7 @@ namespace ChenPipi.PipiToolbox
         [MenuItem(k_MenuPath + "Set AssetBundle Name", false, k_MenuPriority)]
         private static void Menu_SetAssetBundleName()
         {
-            string[] assetGUIDs = (string[])Selection.assetGUIDs.Clone();
+            string[] assetGUIDs = Selection.assetGUIDs;
             InputDialogWindow inputDialog = InputDialogWindow.Create("New AssetBundle Name");
             inputDialog.inputContent = AssetDatabase.GetImplicitAssetBundleName(AssetDatabase.GUIDToAssetPath(assetGUIDs[0]));
             inputDialog.confirmCallback = (s) => SetAssetBundleNameByGUIDs(assetGUIDs, s);
@@ -53,7 +53,7 @@ namespace ChenPipi.PipiToolbox
         [MenuItem(k_MenuPath + "Set AssetBundle Name Based On Path", false, k_MenuPriority2)]
         private static async void Menu_SetAssetBundleNameBasedOnPath()
         {
-            string[] assetGUIDs = (string[])Selection.assetGUIDs.Clone();
+            string[] assetGUIDs = Selection.assetGUIDs;
             foreach (string guid in assetGUIDs)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
@@ -72,7 +72,7 @@ namespace ChenPipi.PipiToolbox
         [MenuItem(k_MenuPath + "Set AssetBundle Name Based On Path (With Extension)", false, k_MenuPriority2)]
         private static async void Menu_SetAssetBundleNameBasedOnPath2()
         {
-            string[] assetGUIDs = (string[])Selection.assetGUIDs.Clone();
+            string[] assetGUIDs = Selection.assetGUIDs;
             foreach (string guid in assetGUIDs)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
@@ -87,7 +87,7 @@ namespace ChenPipi.PipiToolbox
         [MenuItem(k_MenuPath + "Set AssetBundle Name Based On Directory", false, k_MenuPriority2)]
         private static async void Menu_SetAssetBundleNameBasedOnDirectory()
         {
-            string[] assetGUIDs = (string[])Selection.assetGUIDs.Clone();
+            string[] assetGUIDs = Selection.assetGUIDs;
             foreach (string guid in assetGUIDs)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
@@ -99,6 +99,20 @@ namespace ChenPipi.PipiToolbox
                 string assetBundleName = directory.Remove(0, 7).ToLower();
                 assetBundleName = assetBundleName.Replace("\\", "/");
                 await SetAssetBundleName(assetPath, assetBundleName);
+            }
+        }
+
+        /// <summary>
+        /// 移除资源的 AssetBundle 名称
+        /// </summary>
+        [MenuItem(k_MenuPath + "Remove AssetBundle Name", false, k_MenuPriority2)]
+        private static async void Menu_RemoveAssetBundleName()
+        {
+            string[] assetGUIDs = Selection.assetGUIDs;
+            foreach (string guid in assetGUIDs)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                await SetAssetBundleName(assetPath, string.Empty);
             }
         }
 

@@ -22,7 +22,7 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 1;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 001;
 
         /// <summary>
         /// Log 头部信息

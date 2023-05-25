@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -5,17 +6,17 @@ namespace ChenPipi.PipiToolbox
 {
 
     /// <summary>
-    /// RectTransform 工具
+    /// Transform 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221213</version>
-    public static class RectTransformTool
+    /// <version>20230519</version>
+    public static class TransformTool
     {
 
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string k_MenuPath = PipiToolboxMenu.GameObjectMenuBasePath + "RectTransform Tool/";
+        private const string k_MenuPath = PipiToolboxMenu.GameObjectMenuBasePath + "Transform Tool/";
 
         /// <summary>
         /// 菜单项优先级
@@ -64,7 +65,7 @@ namespace ChenPipi.PipiToolbox
         [MenuItem(k_MenuPath + "Rotate Clockwise (1 degree) %#RIGHT", false, k_MenuPriority)]
         private static void Menu_RotateClockwise()
         {
-            Rotate(Selection.transforms, -1f);
+            RotateZ(Selection.transforms, -1f);
         }
 
         /// <summary>
@@ -73,19 +74,25 @@ namespace ChenPipi.PipiToolbox
         [MenuItem(k_MenuPath + "Rotate Anti-clockwise (1 degree) %#LEFT", false, k_MenuPriority)]
         private static void Menu_RotateAnticlockwise()
         {
-            Rotate(Selection.transforms, 1f);
+            RotateZ(Selection.transforms, 1f);
         }
 
         /// <summary>
         /// 移动
         /// </summary>
-        /// <param name="rectTransform"></param>
+        /// <param name="transform"></param>
         /// <param name="movement"></param>
-        private static void Move(RectTransform rectTransform, Vector2 movement)
+        private static void Move(Transform transform, Vector2 movement)
         {
-            if (rectTransform == null) return;
-            Undo.RegisterFullObjectHierarchyUndo(rectTransform, "Update position");
-            rectTransform.anchoredPosition += movement;
+            Undo.RegisterFullObjectHierarchyUndo(transform, "Update position");
+            if (transform is RectTransform rectTransform)
+            {
+                rectTransform.anchoredPosition += movement;
+            }
+            else
+            {
+                transform.localPosition += (Vector3)movement;
+            }
         }
 
         /// <summary>
@@ -93,25 +100,23 @@ namespace ChenPipi.PipiToolbox
         /// </summary>
         /// <param name="transforms"></param>
         /// <param name="movement"></param>
-        private static void Move(Transform[] transforms, Vector2 movement)
+        private static void Move(IEnumerable<Transform> transforms, Vector2 movement)
         {
             foreach (Transform transform in transforms)
             {
-                if (!(transform is RectTransform rectTransform)) continue;
-                Move(rectTransform, movement);
+                Move(transform, movement);
             }
         }
 
         /// <summary>
         /// 旋转
         /// </summary>
-        /// <param name="rectTransform"></param>
+        /// <param name="transform"></param>
         /// <param name="zAngle"></param>
-        private static void Rotate(RectTransform rectTransform, float zAngle)
+        private static void RotateZ(Transform transform, float zAngle)
         {
-            if (rectTransform == null) return;
-            Undo.RegisterFullObjectHierarchyUndo(rectTransform, "Update rotation");
-            rectTransform.Rotate(0, 0, zAngle);
+            Undo.RegisterFullObjectHierarchyUndo(transform, "Update rotation");
+            transform.Rotate(0, 0, zAngle);
         }
 
         /// <summary>
@@ -119,12 +124,11 @@ namespace ChenPipi.PipiToolbox
         /// </summary>
         /// <param name="transforms"></param>
         /// <param name="zAngle"></param>
-        private static void Rotate(Transform[] transforms, float zAngle)
+        private static void RotateZ(IEnumerable<Transform> transforms, float zAngle)
         {
             foreach (Transform transform in transforms)
             {
-                if (!(transform is RectTransform rectTransform)) continue;
-                Rotate(rectTransform, zAngle);
+                RotateZ(transform, zAngle);
             }
         }
 

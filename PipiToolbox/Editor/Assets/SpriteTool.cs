@@ -31,21 +31,22 @@ namespace ChenPipi.PipiToolbox
         /// <summary>
         /// 批量设置 Sprite 资源的 Packing Tag
         /// </summary>
-        [MenuItem(k_MenuPath + "Set Sprite Packing Tag (Multi-asset support)", false, k_MenuPriority)]
-        private static void Menu_BatchSettingSpritePackingTag()
+        [MenuItem(k_MenuPath + "Set Sprite Packing Tag", false, k_MenuPriority)]
+        private static void Menu_SetSpritePackingTag()
         {
+            string[] assetGUIDs = Selection.assetGUIDs;
             InputDialogWindow inputDialog = InputDialogWindow.Create("New Packing Tag");
-            async void InputDialogConfirmCallback(string s) => await SetSpritePackingTagByGUIDs(Selection.assetGUIDs, s);
-            inputDialog.confirmCallback = InputDialogConfirmCallback;
+            inputDialog.inputContent = TextureUtility.GetSpritePackingTag(AssetDatabase.GUIDToAssetPath(assetGUIDs[0]));
+            inputDialog.confirmCallback = (s) => SetSpritePackingTagByGUIDs(assetGUIDs, s);
         }
 
         /// <summary>
         /// 移除 Sprite 资源的 Packing Tag
         /// </summary>
-        [MenuItem(k_MenuPath + "Remove Sprite Packing Tag (Multi-asset support)", false, k_MenuPriority)]
-        private static void Menu_RemoveSpritePackingTag()
+        [MenuItem(k_MenuPath + "Remove Sprite Packing Tag", false, k_MenuPriority)]
+        private static async void Menu_RemoveSpritePackingTag()
         {
-            SetSpritePackingTagByGUIDs(Selection.assetGUIDs, "");
+            await SetSpritePackingTagByGUIDs(Selection.assetGUIDs, "");
         }
 
         /// <summary>

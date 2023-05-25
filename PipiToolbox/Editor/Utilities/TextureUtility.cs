@@ -109,6 +109,35 @@ namespace ChenPipi.PipiToolbox
             textureImporter.SaveAndReimport();
         }
 
+        /// <summary>
+        /// 设置 Sprite 资源的 Packing Tag
+        /// </summary>
+        /// <param name="assetPath">资源路径</param>
+        /// <param name="packingTag">Packing Tag</param>
+        public static void SetSpritePackingTag(string assetPath, string packingTag)
+        {
+            TextureImporter assetImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter;
+            if (assetImporter == null || assetImporter.textureType != TextureImporterType.Sprite)
+            {
+                return;
+            }
+            assetImporter.spritePackingTag = packingTag;
+            assetImporter.SaveAndReimport();
+        }
+
+        /// <summary>
+        /// 获取 Sprite 资源的 Packing Tag
+        /// </summary>
+        public static string GetSpritePackingTag(string assetPath)
+        {
+            TextureImporter assetImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter;
+            if (assetImporter == null || assetImporter.textureType != TextureImporterType.Sprite)
+            {
+                return string.Empty;
+            }
+            return assetImporter.spritePackingTag;
+        }
+
     }
 
 }

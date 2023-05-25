@@ -84,11 +84,11 @@ namespace ChenPipi.PipiToolbox
         /// <returns></returns>
         private static string[] GetSelectedFilePaths()
         {
-            string[] guids = Selection.assetGUIDs;
-            string[] paths = new string[guids.Length];
-            for (int i = 0; i < guids.Length; i++)
+            string[] assetGUIDs = Selection.assetGUIDs;
+            string[] paths = new string[assetGUIDs.Length];
+            for (int i = 0; i < assetGUIDs.Length; i++)
             {
-                paths[i] = AssetUtility.ToAbsolutePath(AssetDatabase.GUIDToAssetPath(guids[i]));
+                paths[i] = AssetUtility.ToAbsolutePath(AssetDatabase.GUIDToAssetPath(assetGUIDs[i]));
             }
             return paths;
         }
