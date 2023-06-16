@@ -4,7 +4,7 @@ Just a toolbox.
 
 ## Installation
 
-Download and put the `PipiToolbox` folder into your project's `Assets` folder(or any subfolder would be ok).
+Download and put the **Whole Project** in your project's `Assets` folder (or any subfolder would be ok).
 
 ## Usage
 
