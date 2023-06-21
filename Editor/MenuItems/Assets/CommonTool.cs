@@ -4,22 +4,22 @@ namespace ChenPipi.PipiToolbox.Editor
 {
 
     /// <summary>
-    /// 资源工具
+    /// 资源通用工具
     /// </summary>
     /// <author>陈皮皮</author>
     /// <version>20221128</version>
-    public static class AssetTool
+    public static class CommonTool
     {
 
         /// <summary>
         /// 菜单项路径
         /// </summary>
-        private const string k_MenuPath = PipiToolboxMenu.AssetsMenuBasePath + "Asset Tool/";
+        private const string k_MenuPath = PipiToolboxMenu.AssetsMenuBasePath + "Common Tool/";
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 100;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 50;
 
         /// <summary>
         /// Log 头部信息
@@ -31,7 +31,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             AssetUtility.ReimportAsset(Selection.activeObject);
         }
-        
+
     }
 
 }

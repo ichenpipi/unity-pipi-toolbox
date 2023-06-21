@@ -20,7 +20,7 @@ namespace ChenPipi.PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 50;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 10;
 
         private static class Operation
         {

@@ -20,7 +20,7 @@ namespace ChenPipi.PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 1001;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 101;
 
         /// <summary>
         /// Log 头部信息
@@ -32,22 +32,24 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             InputDialogWindow inputDialog = InputDialogWindow.Create("Find asset by GUID");
             inputDialog.description = "Enter the GUID of asset:";
-            inputDialog.inputContent = PipiToolboxUtility.GetClipboardContent();
+            inputDialog.inputContent = PipiToolboxUtil.GetClipboardContent();
 
             void InputDialogConfirmCallback(string input)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(input);
                 if (!string.IsNullOrEmpty(assetPath))
                 {
+                    // 聚焦
+                    PipiToolboxUtil.FocusOnAsset(input);
+                    // 打印
                     Object asset = AssetDatabase.LoadAssetAtPath<Object>(assetPath);
-                    Selection.activeObject = asset;
-                    PipiToolboxUtility.LogSuccess(k_LogTag, $"Asset found!", asset);
-                    PipiToolboxUtility.LogSuccess(k_LogTag, $"GUID: <color={LogColor.Yellow}>{input}</color>", asset);
-                    PipiToolboxUtility.LogSuccess(k_LogTag, $"Path: <color={LogColor.Yellow}>{assetPath}</color>", asset);
+                    PipiToolboxUtil.LogSuccess(k_LogTag, $"Asset found!", asset);
+                    PipiToolboxUtil.LogSuccess(k_LogTag, $"GUID: <color={LogColor.Yellow}>{input}</color>", asset);
+                    PipiToolboxUtil.LogSuccess(k_LogTag, $"Path: <color={LogColor.Yellow}>{assetPath}</color>", asset);
                 }
                 else
                 {
-                    PipiToolboxUtility.LogWarning(k_LogTag, $"There is no asset with GUID: <color={LogColor.Yellow}>{input}</color>");
+                    PipiToolboxUtil.LogWarning(k_LogTag, $"There is no asset with GUID: <color={LogColor.Yellow}>{input}</color>");
                 }
             }
 
@@ -59,21 +61,24 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             InputDialogWindow inputDialog = InputDialogWindow.Create("Find asset by path");
             inputDialog.description = "Enter the path of asset:";
-            inputDialog.inputContent = PipiToolboxUtility.GetClipboardContent();
+            inputDialog.inputContent = PipiToolboxUtil.GetClipboardContent();
 
             void InputDialogConfirmCallback(string input)
             {
                 Object asset = AssetDatabase.LoadAssetAtPath<Object>(input);
                 if (asset)
                 {
-                    Selection.activeObject = asset;
-                    PipiToolboxUtility.LogSuccess(k_LogTag, $"Asset found!", asset);
-                    PipiToolboxUtility.LogSuccess(k_LogTag, $"Path: <color={LogColor.Yellow}>{input}</color>", asset);
-                    PipiToolboxUtility.LogSuccess(k_LogTag, $"GUID: <color={LogColor.Yellow}>{AssetDatabase.AssetPathToGUID(input)}</color>", asset);
+                    // 聚焦
+                    string guid = AssetDatabase.AssetPathToGUID(input);
+                    PipiToolboxUtil.FocusOnAsset(guid);
+                    // 打印
+                    PipiToolboxUtil.LogSuccess(k_LogTag, $"Asset found!", asset);
+                    PipiToolboxUtil.LogSuccess(k_LogTag, $"Path: <color={LogColor.Yellow}>{input}</color>", asset);
+                    PipiToolboxUtil.LogSuccess(k_LogTag, $"GUID: <color={LogColor.Yellow}>{guid}</color>", asset);
                 }
                 else
                 {
-                    PipiToolboxUtility.LogWarning(k_LogTag, $"There is no asset with Path: <color={LogColor.Yellow}>{input}</color>");
+                    PipiToolboxUtil.LogWarning(k_LogTag, $"There is no asset with Path: <color={LogColor.Yellow}>{input}</color>");
                 }
             }
 

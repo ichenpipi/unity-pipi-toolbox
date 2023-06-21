@@ -22,7 +22,7 @@ namespace ChenPipi.PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 140;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 53;
 
         /// <summary>
         /// Log 头部信息
@@ -175,11 +175,11 @@ namespace ChenPipi.PipiToolbox.Editor
             int originalWidth = texture.width, originalHeight = texture.height;
             if (originalWidth == width && originalHeight == height)
             {
-                PipiToolboxUtility.LogWarning(k_LogTag, $"This texture does not need to be resized! Asset path: <color={LogColor.Yellow}>{AssetDatabase.GetAssetPath(texture)}</color>", texture);
+                PipiToolboxUtil.LogWarning(k_LogTag, $"This texture does not need to be resized! Asset path: <color={LogColor.Yellow}>{AssetDatabase.GetAssetPath(texture)}</color>", texture);
                 return;
             }
             TextureUtility.Resize(texture, width, height);
-            PipiToolboxUtility.LogSuccess(k_LogTag, $"Resized texture from <color={LogColor.White}>{originalWidth}x{originalHeight}</color> to <color={LogColor.Yellow}>{width}x{height}</color>! Asset path: <color={LogColor.Yellow}>{AssetDatabase.GetAssetPath(texture)}</color>", texture);
+            PipiToolboxUtil.LogSuccess(k_LogTag, $"Resized texture from <color={LogColor.White}>{originalWidth}x{originalHeight}</color> to <color={LogColor.Yellow}>{width}x{height}</color>! Asset path: <color={LogColor.Yellow}>{AssetDatabase.GetAssetPath(texture)}</color>", texture);
         }
 
     }

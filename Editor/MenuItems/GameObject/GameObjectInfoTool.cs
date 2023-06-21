@@ -39,7 +39,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeGameObject) return;
             string value = Selection.activeGameObject.name;
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>Name</color>: <color={LogColor.Yellow}>{value}</color>", Selection.activeGameObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>Name</color>: <color={LogColor.Yellow}>{value}</color>", Selection.activeGameObject);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeGameObject) return;
             string value = GameObjectUtility.GetPath(Selection.activeGameObject);
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>Path</color>: <color={LogColor.Yellow}>{value}</color>", Selection.activeGameObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>Path</color>: <color={LogColor.Yellow}>{value}</color>", Selection.activeGameObject);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeGameObject) return;
             string value = Selection.activeGameObject.GetInstanceID().ToString();
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>InstanceID</color>: <color={LogColor.Yellow}>{value}</color>", Selection.activeGameObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>InstanceID</color>: <color={LogColor.Yellow}>{value}</color>", Selection.activeGameObject);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeGameObject) return;
             string value = GameObjectUtility.GetLocalIdentifier(Selection.activeGameObject).ToString();
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>fileID</color>: <color={LogColor.Yellow}>{value}</color>", Selection.activeGameObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>fileID</color>: <color={LogColor.Yellow}>{value}</color>", Selection.activeGameObject);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeGameObject) return;
             string value = Selection.activeGameObject.name;
-            PipiToolboxUtility.SaveToClipboard(value);
+            PipiToolboxUtil.SaveToClipboard(value);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeGameObject) return;
             string value = GameObjectUtility.GetPath(Selection.activeGameObject);
-            PipiToolboxUtility.SaveToClipboard(value);
+            PipiToolboxUtil.SaveToClipboard(value);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeGameObject) return;
             string value = Selection.activeGameObject.GetInstanceID().ToString();
-            PipiToolboxUtility.SaveToClipboard(value);
+            PipiToolboxUtil.SaveToClipboard(value);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeGameObject) return;
             string value = GameObjectUtility.GetLocalIdentifier(Selection.activeGameObject).ToString();
-            PipiToolboxUtility.SaveToClipboard(value);
+            PipiToolboxUtil.SaveToClipboard(value);
         }
 
     }

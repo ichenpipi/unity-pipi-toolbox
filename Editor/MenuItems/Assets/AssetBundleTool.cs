@@ -23,12 +23,12 @@ namespace ChenPipi.PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 110;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 51;
 
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int k_MenuPriority2 = k_MenuPriority + 10;
+        private const int k_MenuPriority2 = k_MenuPriority + 11;
 
         /// <summary>
         /// Log 头部信息
@@ -173,7 +173,7 @@ namespace ChenPipi.PipiToolbox.Editor
                 }
                 // 执行操作
                 AssetUtility.SetAssetBundleNameAndVariant(path, assetBundleName, null);
-                PipiToolboxUtility.LogSuccess(
+                PipiToolboxUtil.LogSuccess(
                     k_LogTag,
                     $"Set AssetBundle Name: <color={LogColor.White}>{assetPath}</color> => <color={LogColor.Yellow}>{assetBundleName}</color>",
                     AssetImporter.GetAtPath(assetPath)

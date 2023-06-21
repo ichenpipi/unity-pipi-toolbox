@@ -21,7 +21,7 @@ namespace ChenPipi.PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 130;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 52;
 
         /// <summary>
         /// Log 头部信息
@@ -122,7 +122,7 @@ namespace ChenPipi.PipiToolbox.Editor
             }
             assetImporter.spritePackingTag = packingTag;
             assetImporter.SaveAndReimport();
-            PipiToolboxUtility.LogSuccess(k_LogTag, $"Set Sprite Packing Tag: <color={LogColor.White}>{assetPath}</color> => <color={LogColor.Yellow}>{packingTag}</color>", assetImporter);
+            PipiToolboxUtil.LogSuccess(k_LogTag, $"Set Sprite Packing Tag: <color={LogColor.White}>{assetPath}</color> => <color={LogColor.Yellow}>{packingTag}</color>", assetImporter);
         }
 
     }

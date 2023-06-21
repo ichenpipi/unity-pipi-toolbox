@@ -22,7 +22,7 @@ namespace ChenPipi.PipiToolbox.Editor
         /// <summary>
         /// 菜单项优先级
         /// </summary>
-        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 001;
+        private const int k_MenuPriority = PipiToolboxMenu.AssetsMenuBasePriority + 0;
 
         /// <summary>
         /// Log 头部信息
@@ -52,7 +52,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             string name = Selection.activeObject.name;
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>Name: </color><color={LogColor.Yellow}>{name}</color>", Selection.activeObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>Name: </color><color={LogColor.Yellow}>{name}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             string name = Selection.activeObject.GetType().Name;
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>Type Name: </color><color={LogColor.Yellow}>{name}</color>", Selection.activeObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>Type Name: </color><color={LogColor.Yellow}>{name}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>Relative Path: </color><color={LogColor.Yellow}>{path}</color>", Selection.activeObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>Relative Path: </color><color={LogColor.Yellow}>{path}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             string path = GetAbsolutePath(Selection.activeObject);
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>Absolute Path: </color><color={LogColor.Yellow}>{path}</color>", Selection.activeObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>Absolute Path: </color><color={LogColor.Yellow}>{path}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -96,8 +96,8 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             AssetDatabase.TryGetGUIDAndLocalFileIdentifier(Selection.activeObject, out string guid, out long localId);
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>GUID: </color><color={LogColor.Yellow}>{guid}</color>", Selection.activeObject);
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>File ID (Local ID, Local Identifier In File): </color><color={LogColor.Yellow}>{localId}</color>", Selection.activeObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>GUID: </color><color={LogColor.Yellow}>{guid}</color>", Selection.activeObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>File ID (Local ID, Local Identifier In File): </color><color={LogColor.Yellow}>{localId}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace ChenPipi.PipiToolbox.Editor
         {
             if (!Selection.activeObject) return;
             int instanceID = Selection.activeObject.GetInstanceID();
-            PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>Instance ID: </color><color={LogColor.Yellow}>{instanceID}</color>", Selection.activeObject);
+            PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>Instance ID: </color><color={LogColor.Yellow}>{instanceID}</color>", Selection.activeObject);
         }
 
         /// <summary>
@@ -121,11 +121,11 @@ namespace ChenPipi.PipiToolbox.Editor
             string name = GetAssetBundleName(Selection.activeObject);
             if (string.IsNullOrEmpty(name))
             {
-                PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>AssetBundle Name: </color><color=red><None></color>", Selection.activeObject);
+                PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>AssetBundle Name: </color><color=red><None></color>", Selection.activeObject);
             }
             else
             {
-                PipiToolboxUtility.LogNormal(k_LogTag, $"<color={LogColor.White}>AssetBundle Name: </color><color={LogColor.Yellow}>{name}</color>", Selection.activeObject);
+                PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>AssetBundle Name: </color><color={LogColor.Yellow}>{name}</color>", Selection.activeObject);
             }
         }
 
@@ -142,7 +142,7 @@ namespace ChenPipi.PipiToolbox.Editor
                 Object asset = AssetDatabase.LoadAssetAtPath<Object>(path);
                 list.Add(asset.name);
             }
-            PipiToolboxUtility.SaveToClipboard(list.Join(", "));
+            PipiToolboxUtil.SaveToClipboard(list.Join(", "));
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace ChenPipi.PipiToolbox.Editor
                 string path = AssetDatabase.GUIDToAssetPath(guid);
                 list.Add(path);
             }
-            PipiToolboxUtility.SaveToClipboard(list.Join(", "));
+            PipiToolboxUtil.SaveToClipboard(list.Join(", "));
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace ChenPipi.PipiToolbox.Editor
             {
                 list.Add(guid);
             }
-            PipiToolboxUtility.SaveToClipboard(list.Join(", "));
+            PipiToolboxUtil.SaveToClipboard(list.Join(", "));
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace ChenPipi.PipiToolbox.Editor
                 Object asset = AssetDatabase.LoadAssetAtPath<Object>(path);
                 list.Add(GetAssetBundleName(asset));
             }
-            PipiToolboxUtility.SaveToClipboard(list.Join(", "));
+            PipiToolboxUtil.SaveToClipboard(list.Join(", "));
         }
 
         /// <summary>
