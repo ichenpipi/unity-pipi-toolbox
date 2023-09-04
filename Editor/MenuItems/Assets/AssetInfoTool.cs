@@ -10,7 +10,7 @@ namespace ChenPipi.PipiToolbox.Editor
     /// 资源信息工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20230516</version>
+    /// <version>20230829</version>
     public static class AssetInfoTools
     {
 
@@ -84,7 +84,8 @@ namespace ChenPipi.PipiToolbox.Editor
         private static void PrintAbsolutePath()
         {
             if (!Selection.activeObject) return;
-            string path = GetAbsolutePath(Selection.activeObject);
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            path = AssetUtility.ToAbsolutePath(path);
             PipiToolboxUtil.LogNormal(k_LogTag, $"<color={LogColor.White}>Absolute Path: </color><color={LogColor.Yellow}>{path}</color>", Selection.activeObject);
         }
 
@@ -188,16 +189,6 @@ namespace ChenPipi.PipiToolbox.Editor
                 list.Add(GetAssetBundleName(asset));
             }
             PipiToolboxUtil.SaveToClipboard(list.Join(", "));
-        }
-
-        /// <summary>
-        /// 获取绝对路径
-        /// </summary>
-        /// <param name="asset"></param>
-        /// <returns></returns>
-        private static string GetAbsolutePath(Object asset)
-        {
-            return Path.Combine(AssetUtility.ProjectPath, AssetDatabase.GetAssetPath(asset));
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace ChenPipi.PipiToolbox.Editor
     /// SpriteAtlas 工具
     /// </summary>
     /// <author>陈皮皮</author>
-    /// <version>20221230</version>
+    /// <version>20230809</version>
     public static class SpriteAtlasTool
     {
 
@@ -43,25 +43,29 @@ namespace ChenPipi.PipiToolbox.Editor
         /// </summary>
         private static readonly string s_SpriteAtlasFolderPath = Path.Combine(Application.dataPath, k_SpriteAtlasFolderName);
 
-        // /// <summary>
-        // /// 
-        // /// </summary>
-        // [MenuItem(MenuPath + "Create SpriteAtlas With Selection", false, MenuPriority)]
-        // private static void Menu_CreateSpriteAtlasWithSelection()
-        // {
-        //     // 获取选中的 Sprite
-        //     Sprite[] sprites = GetSpritesInSelection();
-        //     if (sprites.Length == 0) return;
-        // }
+        /// <summary>
+        /// 创建新的 SpriteAtlas
+        /// </summary>
+        [MenuItem(k_MenuPath + "Create New SpriteAtlas", false, k_MenuPriority)]
+        private static void Menu_CreateNewSpriteAtlas()
+        {
+            // 创建 SpriteAtlas
+            string path = PickNewSpriteAtlasPath();
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+            path = AssetUtility.ToRelativePath(path);
+            SpriteAtlas spriteAtlas = CreateSpriteAtlas(path);
 
-        // /// <summary>
-        // /// 
-        // /// </summary>
-        // [MenuItem(MenuPath + "Create SpriteAtlas Based On Sprite Tag", false, MenuPriority)]
-        // private static void Menu_CreateSpriteAtlasBasedOnSpriteTag()
-        // {
-        //
-        // }
+            // 获取选中的 Sprite
+            Sprite[] sprites = GetSpritesInSelection();
+            // 添加 Sprite
+            if (sprites.Length > 0)
+            {
+                AddSpritesToSpriteAtlas(spriteAtlas, sprites);
+            }
+        }
 
         /// <summary>
         /// 添加当前选中的 Sprite 资源到已有的 SpriteAtlas
@@ -91,11 +95,7 @@ namespace ChenPipi.PipiToolbox.Editor
         /// <param name="sprites"></param>
         public static async void AddSpritesToSpriteAtlas(SpriteAtlas spriteAtlas, Sprite[] sprites)
         {
-            if (sprites.Length == 0)
-            {
-                PipiToolboxUtil.LogWarning(k_LogTag, $"Sprite array is empty, skip adding.");
-                return;
-            }
+            if (sprites.Length == 0) return;
             // 图集路径
             string spriteAtlasPath = AssetDatabase.GetAssetPath(spriteAtlas);
             // 开始添加
@@ -120,7 +120,7 @@ namespace ChenPipi.PipiToolbox.Editor
                     continue;
                 }
                 // 添加到图集
-                spriteAtlas.Add(new Object[] {sprite});
+                spriteAtlas.Add(new Object[] { sprite });
                 addedCount++;
                 PipiToolboxUtil.LogSuccess(k_LogTag, $"Added to SpriteAtlas: <color={LogColor.White}>{spritePath}</color> => <color={LogColor.Yellow}>{spriteAtlasPath}</color>", sprite);
             }
@@ -143,7 +143,8 @@ namespace ChenPipi.PipiToolbox.Editor
             List<Sprite> sprites = new List<Sprite>();
             foreach (Object asset in assets)
             {
-                Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(AssetDatabase.GetAssetPath(asset));
+                string assetPath = AssetDatabase.GetAssetPath(asset);
+                Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
                 if (sprite) sprites.Add(sprite);
             }
             return sprites.ToArray();
@@ -152,7 +153,7 @@ namespace ChenPipi.PipiToolbox.Editor
         /// <summary>
         /// 创建 SpriteAtlas 资源
         /// </summary>
-        /// <param name="path">路径</param>
+        /// <param name="path">相对路径</param>
         /// <param name="sprites">精灵</param>
         /// <returns></returns>
         private static SpriteAtlas CreateSpriteAtlas(string path, Sprite[] sprites = null)
@@ -182,14 +183,13 @@ namespace ChenPipi.PipiToolbox.Editor
                 maxTextureSize = 2048,
                 format = TextureImporterFormat.Automatic,
                 textureCompression = TextureImporterCompression.Compressed,
-                // crunchedCompression = true,
-                // compressionQuality = 50,
             };
             spriteAtlas.SetPlatformSettings(platformSettings);
             // 添加 Sprite
             if (sprites != null) spriteAtlas.Add(sprites);
             // 创建资源文件
             AssetDatabase.CreateAsset(spriteAtlas, path);
+            PipiToolboxUtil.LogSuccess(k_LogTag, $"New SpriteAtlas Created: <color={LogColor.Yellow}>{path}</color>", spriteAtlas);
             return spriteAtlas;
         }
 
@@ -199,35 +199,38 @@ namespace ChenPipi.PipiToolbox.Editor
         /// <returns></returns>
         private static SpriteAtlas PickExistingSpriteAtlas()
         {
+            string path = PickExistingSpriteAtlasPath();
+            if (string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+            path = AssetUtility.ToRelativePath(path);
+            return AssetDatabase.LoadAssetAtPath<SpriteAtlas>(path);
+        }
+
+        /// <summary>
+        /// 选择已有的 SpriteAtlas 路径
+        /// </summary>
+        /// <returns>绝对路径</returns>
+        private static string PickExistingSpriteAtlasPath()
+        {
+            string directory = s_SpriteAtlasFolderPath;
             const string title = "Select an existing SpriteAtlas";
             const string extension = "spriteatlas";
+            return EditorUtility.OpenFilePanel(title, directory, extension);
+        }
+
+        /// <summary>
+        /// 选择新建 SpriteAtlas 的路径
+        /// </summary>
+        /// <returns>绝对路径</returns>
+        private static string PickNewSpriteAtlasPath()
+        {
             string directory = s_SpriteAtlasFolderPath;
-            string path = EditorUtility.OpenFilePanel(title, directory, extension);
-            return string.IsNullOrEmpty(path) ? null : AssetDatabase.LoadAssetAtPath<SpriteAtlas>(GetAssetRelativePath(path));
-        }
-
-        /// <summary>
-        /// 获取目标资源的在项目 Assets 目录下的相对路径
-        /// </summary>
-        /// <param name="absolutePath">资源的绝对路径</param>
-        /// <returns></returns>
-        private static string GetAssetRelativePath(string absolutePath)
-        {
-            return "Assets" + absolutePath.Substring(Application.dataPath.Length).Replace("\\", "/");
-        }
-
-        /// <summary>
-        /// 转为打印用的路径
-        /// </summary>
-        /// <param name="path">路径</param>
-        /// <returns></returns>
-        private static string ToPrintPath(string path)
-        {
-            if (path.StartsWith("Assets/"))
-            {
-                path = path.Substring("Assets/".Length);
-            }
-            return path;
+            const string title = "New SpriteAtlas";
+            const string defaultName = "NewSpriteAtlas";
+            const string extension = "spriteatlas";
+            return EditorUtility.SaveFilePanel(title, directory, defaultName, extension);
         }
 
     }
